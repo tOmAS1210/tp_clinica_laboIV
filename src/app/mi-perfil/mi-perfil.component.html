@@ -1,0 +1,91 @@
+<div class="contenedor-central">
+  <div class="container">
+    <h1>Perfil del Usuario</h1>
+    <div class="datos-personales">
+      <ul>
+        <li class="perfil-imagen">
+          <img
+            [src]="usuarioActual.imagenesPerfil"
+            alt="Imagen perfil"
+            height="100"
+            width="100"
+          />
+        </li>
+        <li><strong>Nombre:</strong> {{ usuarioActual.nombre }}</li>
+        <li><strong>Apellido:</strong> {{ usuarioActual.apellido }}</li>
+        <li><strong>Edad:</strong> {{ usuarioActual.edad }}</li>
+        <li><strong>Email:</strong> {{ usuarioActual.email }}</li>
+        <ng-container *ngIf="nivel === 'Especialista'">
+          <li *ngFor="let especialidad of especialidadesUsuario">
+            <strong>Especialidad:</strong> {{ especialidad }}
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+
+    <div *ngIf="nivel === 'Especialista'" class="mis-horarios">
+      <h2>Disponibilidad</h2>
+      <p>Elija las fechas en las que puede atender:</p>
+
+      <div class="dias-mostrados">
+        <button
+          (click)="agregarDiasDisponibles('lunes')"
+          [class.selected]="estaSeleccionado('lunes')"
+        >
+          Lunes
+        </button>
+
+        <button
+          (click)="agregarDiasDisponibles('martes')"
+          [class.selected]="estaSeleccionado('martes')"
+        >
+          Martes
+        </button>
+
+        <button
+          (click)="agregarDiasDisponibles('miércoles')"
+          [class.selected]="estaSeleccionado('miércoles')"
+        >
+          Miercoles
+        </button>
+
+        <button
+          (click)="agregarDiasDisponibles('jueves')"
+          [class.selected]="estaSeleccionado('jueves')"
+        >
+          Jueves
+        </button>
+
+        <button
+          (click)="agregarDiasDisponibles('viernes')"
+          [class.selected]="estaSeleccionado('viernes')"
+        >
+          Viernes
+        </button>
+
+        <button
+          (click)="agregarDiasDisponibles('sábado')"
+          [class.selected]="estaSeleccionado('sábado')"
+        >
+          Sabado
+        </button>
+      </div>
+
+      <div *ngIf="diasDisponibilidad.length">
+        <h3>Días Seleccionados:</h3>
+        <ul>
+          <li *ngFor="let dia of diasDisponibilidad">Dia: {{ dia }}</li>
+        </ul>
+      </div>
+      <br />
+      <button
+        class="agregar-horarios"
+        (click)="agregarDiasDeAtencionEspecialista()"
+      >
+        Agregar Horarios de Disponibilidad
+      </button>
+    </div>
+
+    <button class="volver" routerLink="/home">Volver</button>
+  </div>
+</div>

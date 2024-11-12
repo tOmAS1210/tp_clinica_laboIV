@@ -1,0 +1,18 @@
+<div class="navbar">
+  <button routerLink="/seccionUsuarios" *ngIf="nivel === 'Administrador'">
+    Seccion Usuarios
+  </button>
+
+  <button
+    routerLink="/solicitarTurnos"
+    *ngIf="nivel === 'Administrador' || nivel === 'Paciente'"
+  >
+    Solicitar Turno
+  </button>
+
+  <button routerLink="/misTurnos">Mis Turnos</button>
+
+  <button routerLink="/miPerfil">Mi perfil</button>
+
+  <button (click)="desloguear()">Desloguear</button>
+</div>

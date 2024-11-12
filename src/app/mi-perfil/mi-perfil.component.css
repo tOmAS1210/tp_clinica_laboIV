@@ -1,0 +1,108 @@
+.contenedor-central {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+h1 {
+  text-align: center;
+  color: #343a40;
+}
+
+.datos-personales ul {
+  list-style: none;
+  padding: 0;
+}
+
+.datos-personales li {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+.perfil-imagen {
+  text-align: center;
+}
+
+.perfil-imagen img {
+  border-radius: 50%;
+}
+
+.mis-horarios {
+  margin-top: 20px;
+}
+
+.agregar-horarios,
+.volver {
+  display: block;
+  margin: 15px auto;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.agregar-horarios:hover,
+.volver:hover {
+  background-color: #0056b3;
+}
+
+.seleccionado {
+  border: 2px solid #007bff;
+}
+
+.mis-horarios {
+  margin: 20px;
+  padding: 20px;
+}
+
+.dias-mostrados {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los botones se distribuyan en varias filas si no caben en una sola línea */
+  gap: 10px; /* Espacio entre los botones */
+  justify-content: flex-start; /* Los botones se alinean al principio de la fila */
+}
+
+.dias-mostrados button {
+  padding: 10px 15px; /* Ajusta el tamaño de los botones */
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px; /* Redondea los bordes de los botones */
+  border: 1px solid #ccc; /* Borde de los botones */
+  background-color: #f0f0f0; /* Color de fondo de los botones */
+  transition: background-color 0.3s ease; /* Efecto suave de cambio de color */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas dentro del botón */
+  min-width: 60px; /* Establece un ancho mínimo para cada botón */
+}
+
+.dias-mostrados button.selected {
+  background-color: #007bff; /* Fondo diferente cuando está seleccionado */
+  color: white; /* Color de texto cuando está seleccionado */
+}
+
+.agregar-horarios {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+.agregar-horarios:hover {
+  background-color: #218838;
+}

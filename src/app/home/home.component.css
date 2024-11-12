@@ -1,0 +1,26 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #00796b; /* Cambia este color según prefieras */
+  padding: 10px 5px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Estilos de los botones en la barra */
+.navbar button {
+  background-color: #ffffff;
+  color: #00796b;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.navbar button:hover {
+  background-color: #004d40;
+  color: white;
+}

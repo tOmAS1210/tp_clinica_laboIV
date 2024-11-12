@@ -1,0 +1,55 @@
+<div class="main-container">
+  <div class="creates-accounts">
+    <p>Cuentas para habilitar o desabilitar cuando lo necesite</p>
+    <div *ngFor="let especialista of listaEspecialistas" class="custom-rect">
+      <p>
+        {{ especialista.nombre }} {{ especialista.apellido }} -
+        {{ especialista.email }}
+      </p>
+      <button (click)="habilitarCuentas(especialista)">
+        {{ especialista.isHabilitado ? "Inhabilitar" : "Habilitar" }}
+      </button>
+    </div>
+  </div>
+
+  <div class="container-admin">
+    <h1>Registro de Admins</h1>
+
+    <p>Nombre</p>
+    <input [(ngModel)]="nombre" type="nombre" placeholder="Nombre" />
+    <br />
+
+    <p>Apellido</p>
+    <input [(ngModel)]="apellido" type="apellido" placeholder="Apellido" />
+    <br />
+
+    <p>Edad</p>
+    <input [(ngModel)]="edad" type="edad" placeholder="Edad" />
+    <br />
+
+    <p>DNI</p>
+    <input [(ngModel)]="dni" type="dni" placeholder="DNI" />
+    <br />
+
+    <p>Email</p>
+    <input [(ngModel)]="mail" type="email" placeholder="Email" />
+    <br />
+
+    <p>Contraseña</p>
+    <input [(ngModel)]="passWord" type="password" placeholder="Password" />
+    <br />
+
+    <p>Foto de perfil</p>
+    <input type="file" (change)="onFileSelected($event)" />
+    <br />
+
+    <p>Segunda Foto de perfil</p>
+    <input type="file" (change)="onFileSelected2($event)" />
+    <br />
+
+    <div class="buttons">
+      <button (click)="registarAdmin()">Registrar</button>
+      <button routerLink="/home">Volver</button>
+    </div>
+  </div>
+</div>

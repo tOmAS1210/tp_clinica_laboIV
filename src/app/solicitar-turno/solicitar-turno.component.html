@@ -1,0 +1,95 @@
+<div class="main-container">
+  <div class="container">
+    <div class="sacar-turno">
+      <p>Especialidad</p>
+      <input
+        [(ngModel)]="especialidadEspecialistaSeleccionado"
+        list="especialidades"
+        type="text"
+        placeholder="Especialidad"
+        (change)="onEspecialidadSeleccionada()"
+      />
+      <datalist id="especialidades">
+        <option
+          *ngFor="let especialidad of especialidades"
+          [value]="especialidad"
+        ></option>
+      </datalist>
+
+      <p>Especialista</p>
+      <input
+        list="especialistas"
+        type="text"
+        [(ngModel)]="nombreEspecialista"
+        (change)="onEspecialistaSeleccionado()"
+        placeholder="Especialista"
+      />
+      <datalist id="especialistas">
+        <option
+          *ngFor="let especialista of especialistasFiltrados"
+          [value]="especialista.nombre"
+        ></option>
+      </datalist>
+
+      <p>Dias de atencion</p>
+      <input
+        list="diasDeAtencion"
+        type="text"
+        placeholder="Elija un dia"
+        [(ngModel)]="diaSeleccionado"
+      />
+
+      <datalist id="diasDeAtencion">
+        <option
+          *ngFor="let dia of especialistaSeleccionado?.DiasQueAtiendo"
+          [value]="dia"
+        ></option>
+      </datalist>
+
+      <br /><br />
+      <button (click)="sacarTurno()">Aceptar</button>
+      <button routerLink="/home">Volver</button>
+      <button (click)="limpiarCampos()">Limpiar</button>
+    </div>
+  </div>
+
+  <div class="container-dias" *ngIf="diaSeleccionado">
+    <p>Seleccione una fecha para el turno</p>
+    <div class="dias-container" *ngFor="let dia of proximoQuinceDias">
+      <button
+        *ngIf="dia.nombreDia === diaSeleccionado"
+        class="elegir-dias"
+        [class.selected]="estaSeleccionado(dia)"
+        (click)="elegirSeleccion(dia)"
+        [ngClass]="{
+          lunes: dia.nombreDia === 'lunes',
+          martes: dia.nombreDia === 'martes',
+          miercoles: dia.nombreDia === 'miércoles',
+          jueves: dia.nombreDia === 'jueves',
+          viernes: dia.nombreDia === 'viernes',
+          sabado: dia.nombreDia === 'sábado',
+          domingo: dia.nombreDia === 'domingo'
+        }"
+      >
+        Día: {{ dia.nombreDia }}
+        <br />
+        Fecha: {{ dia.fecha }}
+      </button>
+    </div>
+  </div>
+
+  <div class="container-horarios" *ngIf="diaSeleccionado">
+    <p>Seleccione un horario de atención</p>
+    <div class="horarios-container">
+      <button
+        *ngFor="let horario of horarios"
+        class="elegir-horario"
+        [class.ocupado]="horariosOcupados.includes(horario)"
+        [class.selected]="horarioSeleccionado === horario"
+        (click)="seleccionarHorario(horario)"
+      >
+        {{ horario }}
+      </button>
+    </div>
+  </div>
+</div>

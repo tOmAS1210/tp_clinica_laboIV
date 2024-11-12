@@ -1,0 +1,177 @@
+<head>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<script>
+  function onSubmit(token) {
+    document.getElementById("demo-form").submit();
+  }
+</script>
+
+<div class="contenedor-tipo">
+  <h1>Que tipo de cuenta desea registar?</h1>
+
+  <div class="access-buttons">
+    <button (click)="mostrarRegistroPacientes()">
+      <img src="pacientes.jpg" alt="Pacientes" height="100" width="100" />
+    </button>
+    <button (click)="mostrarRegistroEspecialistas()">
+      <img
+        src="especialistas.avif"
+        alt="Especialistas"
+        height="100"
+        width="100"
+      />
+    </button>
+  </div>
+</div>
+
+<div class="register-wrapper">
+  <div *ngIf="pacientes" class="container-pacientes">
+    <h1>Registro de Pacientes</h1>
+
+    <p>Nombre</p>
+    <input [(ngModel)]="nombre" type="nombre" placeholder="Nombre" />
+    <br />
+
+    <p>Apellido</p>
+    <input [(ngModel)]="apellido" type="apellido" placeholder="Apellido" />
+    <br />
+
+    <p>Edad</p>
+    <input [(ngModel)]="edad" type="edad" placeholder="Edad" />
+    <br />
+
+    <p>DNI</p>
+    <input [(ngModel)]="dni" type="dni" placeholder="DNI" />
+    <br />
+
+    <p>Obra Social</p>
+    <input
+      [(ngModel)]="obraSocial"
+      type="ObraSocial"
+      placeholder="Obra Social"
+    />
+    <br />
+
+    <p>Email</p>
+    <input [(ngModel)]="mail" type="email" placeholder="Email" />
+    <br />
+
+    <p>Contraseña</p>
+    <input [(ngModel)]="passWord" type="password" placeholder="Password" />
+    <br />
+
+    <p>Foto de perfil</p>
+    <input type="file" (change)="onFileSelected($event)" />
+    <br />
+
+    <p>Segunda Foto de perfil</p>
+    <input type="file" (change)="onFileSelected2($event)" />
+    <br />
+
+    <!-- <re-captcha
+      siteKey="6LeNdHcqAAAAACmgCjRX0Tnnqds7of4tFihhoCK_"
+      (resolved)="resolved($event)"
+    >
+    </re-captcha> -->
+
+    <!-- <button
+      class="g-recaptcha"
+      data-sitekey="6LeNdHcqAAAAACmgCjRX0Tnnqds7of4tFihhoCK_"
+      data-callback="onSubmit"
+      data-action="submit"
+    >
+      Submit
+    </button> -->
+
+    <re-captcha
+      (resolved)="resolved($event)"
+      siteKey="6LeNdHcqAAAAACmgCjRX0Tnnqds7of4tFihhoCK_"
+    ></re-captcha>
+
+    <div class="buttons">
+      <button (click)="registrarUsuario()">Registrar</button>
+      <button routerLink="/bienvenido">Volver</button>
+    </div>
+  </div>
+
+  <div *ngIf="especialistas" class="container-especialista">
+    <h1>Registro de Especialistas</h1>
+
+    <p>Nombre</p>
+    <input [(ngModel)]="nombre" type="nombre" placeholder="Nombre" />
+    <br />
+
+    <p>Apellido</p>
+    <input [(ngModel)]="apellido" type="apellido" placeholder="Apellido" />
+    <br />
+
+    <p>Edad</p>
+    <input [(ngModel)]="edad" type="edad" placeholder="Edad" />
+    <br />
+
+    <p>DNI</p>
+    <input [(ngModel)]="dni" type="dni" placeholder="DNI" />
+    <br />
+
+    <p>Especialidad</p>
+    <input
+      [(ngModel)]="especialidad"
+      list="especialidades"
+      type="especialidad"
+      placeholder="Especialidad"
+    />
+
+    <datalist id="especialidades">
+      <option value="Cardiología"></option>
+      <option value="Dermatología"></option>
+      <option value="Pediatría"></option>
+      <option value="Oftalmología"></option>
+      <option value="Neurología"></option>
+    </datalist>
+    <button (click)="agregarEspecialidad()">Agregar Especialidad</button>
+    <li *ngFor="let especialidad of especialidadesSeleccionadas">
+      {{ especialidad }}
+    </li>
+    <br />
+
+    <p>Mail</p>
+    <input [(ngModel)]="mail" type="email" placeholder="Mail" />
+    <br />
+
+    <p>Contraseña</p>
+    <input [(ngModel)]="passWord" type="password" placeholder="Password" />
+    <br />
+
+    <p>Foto de perfil</p>
+    <input type="file" (change)="onFileSelected($event)" />
+    <br />
+
+    <!-- <re-captcha
+      siteKey="6LeNdHcqAAAAACmgCjRX0Tnnqds7of4tFihhoCK_"
+      (resolved)="resolved($event)"
+    >
+    </re-captcha> -->
+
+    <!-- <button
+      class="g-recaptcha"
+      data-sitekey="6LeNdHcqAAAAACmgCjRX0Tnnqds7of4tFihhoCK_"
+      data-callback="onSubmit"
+      data-action="submit"
+    >
+      Submit
+    </button> -->
+
+    <div>
+      <re-captcha
+        (resolved)="resolved($event)"
+        siteKey="6LeNdHcqAAAAACmgCjRX0Tnnqds7of4tFihhoCK_"
+      ></re-captcha>
+    </div>
+
+    <div class="buttons">
+      <button (click)="registrarUsuario()">Registrar</button>
+      <button routerLink="/bienvenido">Volver</button>
+    </div>
+  </div>
+</div>
