@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Inject } from '@angular/core';
 import {
   Auth,
   browserLocalPersistence,
@@ -45,37 +46,12 @@ export class UserService {
 
   usuarioPersistente: User | null = null;
 
-  constructor(private auth: Auth, private firestore: Firestore) {
+  constructor(
+    @Inject(Auth) private auth: Auth,
+    @Inject(Firestore) private firestore: Firestore
+  ) {
     this.storage = getStorage();
-    //this.verificarAuthState();\
-
-    // this.setAuthPersistence();
-    // this.verificarAuthState();
   }
-
-  // private setAuthPersistence() {
-  //   setPersistence(this.auth, browserLocalPersistence)
-  //     .then(() => {
-  //       console.log('Persistencia establecida');
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error al establecer la persistencia: ', error);
-  //     });
-  // }
-
-  // private verificarAuthState() {
-  //   onAuthStateChanged(this.auth, (user) => {
-  //     if (user) {
-  //       this.usuarioPersistente = user;
-  //       this.isAuthenticated = true;
-  //       console.log('usuario logueado: ', user);
-  //     } else {
-  //       this.usuarioPersistente = null;
-  //       this.isAuthenticated = false;
-  //       console.log('usuario deslogueado: ');
-  //     }
-  //   });
-  // }
 
   async registerPaciente(
     email: string,
