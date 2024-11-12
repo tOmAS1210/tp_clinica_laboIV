@@ -2,6 +2,7 @@
   "name": "tp2",
   "version": "0.0.0",
   "scripts": {
+    "vercel-build": "npm install --legacy-peer-deps && npm run build",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
