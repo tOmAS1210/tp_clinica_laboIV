@@ -1,4 +1,4 @@
-<div class="navbar">
+<div class="contenedor">
   <button routerLink="/seccionUsuarios" *ngIf="nivel === 'Administrador'">
     Seccion Usuarios
   </button>
@@ -10,9 +10,36 @@
     Solicitar Turno
   </button>
 
-  <button routerLink="/misTurnos">Mis Turnos</button>
+  <button
+    routerLink="/misTurnos"
+    *ngIf="usuarioActualCamposCompletos.nivel !== 'Administrador'"
+  >
+    Mis Turnos
+  </button>
+
+  <button
+    routerLink="/turnos"
+    *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
+  >
+    Turnos
+  </button>
 
   <button routerLink="/miPerfil">Mi perfil</button>
 
   <button (click)="desloguear()">Desloguear</button>
+
+  <div class="usuario-info">
+    <span class="nombre-usuario">
+      {{ this.usuarioActualCamposCompletos.nombre }}
+    </span>
+    <img
+      src="{{ this.usuarioActualCamposCompletos.imagenesPerfil }}"
+      alt="imagenUsuario"
+      class="imagen-usuario"
+    />
+  </div>
+</div>
+
+<div class="contenido-bajo-barra">
+  <p>hola pipol</p>
 </div>

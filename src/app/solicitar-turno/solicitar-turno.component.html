@@ -1,50 +1,62 @@
 <div class="main-container">
   <div class="container">
     <div class="sacar-turno">
-      <p>Especialidad</p>
-      <input
-        [(ngModel)]="especialidadEspecialistaSeleccionado"
-        list="especialidades"
-        type="text"
-        placeholder="Especialidad"
-        (change)="onEspecialidadSeleccionada()"
-      />
-      <datalist id="especialidades">
-        <option
-          *ngFor="let especialidad of especialidades"
-          [value]="especialidad"
-        ></option>
-      </datalist>
+      <h1>Seleccione especialista</h1>
+      <div class="profesionales-container">
+        <br />
+        <button
+          *ngFor="let especialista of especialistas"
+          class="profesional-btn"
+          (click)="onEspecialistaSeleccionado(especialista)"
+          [class.selected]="especialistaSeleccionado === especialista"
+        >
+          <img
+            [src]="especialista.imagenesPerfil"
+            alt="imagen perfil"
+            width="40"
+            height="40"
+          />
+          <span>{{ especialista.nombre }}</span>
+        </button>
+      </div>
 
-      <p>Especialista</p>
-      <input
-        list="especialistas"
-        type="text"
-        [(ngModel)]="nombreEspecialista"
-        (change)="onEspecialistaSeleccionado()"
-        placeholder="Especialista"
-      />
-      <datalist id="especialistas">
-        <option
-          *ngFor="let especialista of especialistasFiltrados"
-          [value]="especialista.nombre"
-        ></option>
-      </datalist>
+      <div *ngIf="especialistaSeleccionado" class="container-especialidades">
+        <p>Especialidad</p>
 
-      <p>Dias de atencion</p>
-      <input
-        list="diasDeAtencion"
-        type="text"
-        placeholder="Elija un dia"
-        [(ngModel)]="diaSeleccionado"
-      />
+        <div class="especialidades-container">
+          <button
+            *ngFor="let especialidad of especialidades"
+            class="especialidad-btn"
+            (click)="onEspecialidadSeleccionada(especialidad)"
+            [class.selected]="
+              especialidadEspecialistaSeleccionado === especialidad
+            "
+          >
+            <img
+              [src]="getImagenEspecialidad(especialidad)"
+              alt="{{ especialidad }}"
+            />
+            <span>{{ especialidad }}</span>
+          </button>
+        </div>
+      </div>
 
-      <datalist id="diasDeAtencion">
-        <option
-          *ngFor="let dia of especialistaSeleccionado?.DiasQueAtiendo"
-          [value]="dia"
-        ></option>
-      </datalist>
+      <div class="container-dias-atencion">
+        <p>Dias de atencion</p>
+        <input
+          list="diasDeAtencion"
+          type="text"
+          placeholder="Elija un dia"
+          [(ngModel)]="diaSeleccionado"
+        />
+
+        <datalist id="diasDeAtencion">
+          <option
+            *ngFor="let dia of especialistaSeleccionado?.DiasQueAtiendo"
+            [value]="dia"
+          ></option>
+        </datalist>
+      </div>
 
       <br /><br />
       <button (click)="sacarTurno()">Aceptar</button>
@@ -86,7 +98,9 @@
         class="elegir-horario"
         [class.ocupado]="horariosOcupados.includes(horario)"
         [class.selected]="horarioSeleccionado === horario"
-        (click)="seleccionarHorario(horario)"
+        (click)="
+          !horariosOcupados.includes(horario) && seleccionarHorario(horario)
+        "
       >
         {{ horario }}
       </button>

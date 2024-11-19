@@ -1,1 +1,40 @@
-<p>turnos works!</p>
+<div class="contenedor-filtro"></div>
+
+<div class="contenedor-turnos">
+  <input type="text" [(ngModel)]="filtro" />
+  <div class="turnos-solicitados" *ngFor="let turno of filtrarTurnosInput()">
+    <p>Turno</p>
+
+    <strong>Especialista:</strong> {{ turno.nombreEspecialista }}
+    <strong>Paciente:</strong> {{ turno.nombrePaciente }}
+    <div><strong>Especialidad:</strong> {{ turno.especialidad }}</div>
+    <div><strong>Fecha:</strong> {{ turno.Fecha }}</div>
+    <div><strong>Día:</strong> {{ turno.Dia }}</div>
+    <div><strong>Hora:</strong>{{ turno.Hora }}</div>
+    <div><strong>Estado:</strong> {{ turno.estadoTurno }}</div>
+
+    <button
+      *ngIf="turno.estadoTurno === 'activo'"
+      (click)="cancelarTurno(turno)"
+    >
+      Cancelar Turno
+    </button>
+
+    <div *ngIf="turno.mostrarComentario">
+      <textarea
+        [(ngModel)]="turno.comentario"
+        placeholder="Escribe el motivo de la cancelacion"
+      ></textarea>
+      <button (click)="guardarComentario(turno)">Guardar comentario</button>
+    </div>
+
+    <div *ngIf="turno.resenia">
+      <strong>Resenia:</strong>
+      <p>{{ turno.comentarioCancelacion }}</p>
+      <p>{{ turno.comentarioCancelacionEspecialista }}</p>
+      <p>{{ turno.comentarioCancelacionPaciente }}</p>
+    </div>
+  </div>
+</div>
+
+<button routerLink="/home">Volver</button>

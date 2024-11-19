@@ -1,24 +1,24 @@
 :host {
   display: block;
-  background-color: #62a424;
-  min-height: 100vh; /* Para que ocupe todo el alto de la pantalla */
+  background-color: #6ed4c3;
+  min-height: 100vh;
   width: 98vw;
-  margin: 0; /* Eliminar márgenes */
+  margin: 0;
   padding: 0;
 }
 
 .contenedor-tipo {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centrar horizontalmente */
-  justify-content: flex-start; /* Alinear al inicio, en la parte superior */
-  margin-top: 20px; /* Ajustar espacio desde la parte superior */
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
   padding: 10px;
 }
 
 .botones {
   display: flex;
-  gap: 20px; /* Espacio entre los botones */
+  gap: 20px;
 }
 
 button {
@@ -41,20 +41,17 @@ button {
   flex: 1;
 }
 
-/* Estilos para los encabezados */
 h1 {
   color: #000000;
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-/* Estilos para los párrafos */
 p {
   margin: 10px 0 5px;
   color: #000000;
 }
 
-/* Estilos para los inputs */
 input[type="nombre"],
 input[type="apellido"],
 input[type="edad"],
@@ -71,7 +68,6 @@ input[type="password"] {
   box-sizing: border-box;
 }
 
-/* Estilos para los botones */
 .buttons {
   display: flex;
   justify-content: space-between;
@@ -91,7 +87,6 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Estilos responsivos */
 @media (max-width: 600px) {
   .register-wrapper {
     padding: 15px;
@@ -110,15 +105,15 @@ button:hover {
   position: fixed;
   bottom: 0;
   left: 0;
-  margin: 20px; /* Espacio desde los bordes de la página */
+  margin: 20px;
   font-size: 24px;
   cursor: pointer;
 }
 
 .main-container {
   display: flex;
-  align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
-  gap: 20px; /* Espacio entre el formulario y los botones de acceso */
+  align-items: flex-start;
+  gap: 20px;
   margin-left: -100px;
 }
 
@@ -126,7 +121,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px; /* Espacio entre los botones */
+  gap: 10px;
   margin-right: 150px;
 }
 
@@ -142,6 +137,6 @@ button:hover {
 .access-buttons img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ajusta la imagen para que cubra todo el botón */
-  border-radius: 15px; /* Aplica el borde redondeado también a la imagen */
+  object-fit: cover;
+  border-radius: 15px;
 }

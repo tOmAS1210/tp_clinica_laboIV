@@ -1,8 +1,8 @@
-.navbar {
+/* .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #00796b; /* Cambia este color según prefieras */
+  background-color: #00796b; 
   padding: 10px 5px;
   position: fixed;
   top: 0;
@@ -10,7 +10,6 @@
   z-index: 1000;
 }
 
-/* Estilos de los botones en la barra */
 .navbar button {
   background-color: #ffffff;
   color: #00796b;
@@ -23,4 +22,77 @@
 .navbar button:hover {
   background-color: #004d40;
   color: white;
+} */
+
+/* Barra superior de botones */
+.contenedor {
+  display: flex;
+  justify-content: space-around; /* Distribuye los botones de forma equidistante */
+  align-items: center; /* Centra los botones verticalmente */
+  background-color: #007bff; /* Fondo azul */
+  padding: 10px 0; /* Espaciado vertical */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
+  box-sizing: border-box; /* Asegura que el padding se incluya en el ancho */
+  margin: 0; /* Elimina cualquier margen que pueda estar dejando espacio */
+}
+
+/* Estilo para los botones */
+button {
+  background-color: #ffffff; /* Fondo blanco para los botones */
+  color: #007bff; /* Color de texto azul */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Efecto hover para los botones */
+button:hover {
+  background-color: #0056b3; /* Fondo azul oscuro al pasar el mouse */
+  color: white; /* Cambia el texto a blanco */
+}
+
+/* Estilo para el contenido debajo de la barra */
+.contenido-bajo-barra {
+  padding: 20px;
+  margin-top: 20px; /* Da espacio después de la barra */
+}
+
+/* Asegura que el contenido debajo no esté oculto cuando la barra es sticky */
+body {
+  margin: 0; /* Elimina márgenes para evitar espacio innecesario */
+  padding-top: 60px; /* Ajusta este valor según el tamaño de tu barra */
+}
+
+/* Asegura que el body ocupe todo el espacio de la pantalla */
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+/* Contenedor de la imagen y el nombre */
+.usuario-info {
+  display: flex;
+  align-items: center; /* Centra la imagen y el texto verticalmente */
+  gap: 10px; /* Espacio entre la imagen y el nombre */
+}
+
+/* Estilo para la imagen circular */
+.imagen-usuario {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
+}
+
+/* Estilo para el nombre del usuario */
+.nombre-usuario {
+  font-size: 16px; /* Ajusta el tamaño del nombre si es necesario */
+  color: #000; /* Color del texto */
+  font-weight: bold; /* Puedes agregar negrita si lo deseas */
 }

@@ -1,0 +1,75 @@
+/* Estilo para el contenedor que envolverá todos los turnos */
+.contenedor-turnos {
+  display: flex;
+  flex-wrap: wrap; /* Asegura que los elementos se ajusten a la siguiente línea si es necesario */
+  gap: 10px; /* Espacio entre los turnos */
+  justify-content: flex-start; /* Alinea los turnos al principio */
+  padding: 20px;
+}
+
+/* Estilo para cada turno */
+.turnos-solicitados {
+  display: flex;
+  flex-direction: column; /* Pone la información del turno en columna */
+  background-color: #f0f0f0; /* Fondo claro */
+  padding: 10px;
+  border: 1px solid #ccc; /* Borde claro */
+  border-radius: 4px; /* Bordes ligeramente redondeados */
+  width: 250px; /* Ancho fijo para cada turno */
+  box-sizing: border-box; /* Para que el padding no afecte al ancho total */
+  text-align: center; /* Centra el contenido dentro de cada turno */
+  font-family: Arial, sans-serif;
+}
+
+/* Opcional: Estilo adicional para el botón */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.contenedor-turnos input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

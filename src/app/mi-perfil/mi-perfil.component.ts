@@ -1,4 +1,4 @@
-import { Component, Input, input, OnInit } from '@angular/core';
+import { Component, Inject, Input, input, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -25,7 +25,10 @@ export class MiPerfilComponent implements OnInit {
   mesActual: number = new Date().getMonth() + 1;
   diasDelMes: { dia: number; diaSemana: string }[] = [];
 
-  constructor(private userService: UserService, private auth: Auth) {}
+  constructor(
+    private userService: UserService,
+    @Inject(Auth) private auth: Auth
+  ) {}
 
   agregarDiasDisponibles(dia: string) {
     const diaIndex = this.diasDisponibilidad.indexOf(dia);

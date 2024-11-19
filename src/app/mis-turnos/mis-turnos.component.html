@@ -1,7 +1,93 @@
-<p>mis-turnos works!</p>
-<div class="contenedor">
-  <div class="turnos-solicitados"></div>
+<div class="contenedor-filtro"></div>
 
-  <div class=""></div>
+<div class="contenedor-turnos">
+  <input type="text" [(ngModel)]="filtro" />
+  <div class="turnos-solicitados" *ngFor="let turno of filtrarTurnosInput()">
+    <p>Turno</p>
+    <div *ngIf="tipoUsuario === 'Paciente'">
+      <strong>Especialista:</strong> {{ turno.nombreEspecialista }}
+    </div>
+    <div *ngIf="tipoUsuario === 'Especialista'">
+      <strong>Paciente:</strong> {{ turno.nombrePaciente }}
+    </div>
+
+    <div><strong>Especialidad:</strong> {{ turno.especialidad }}</div>
+
+    <div><strong>Fecha:</strong> {{ turno.Fecha }}</div>
+    <div><strong>Día:</strong> {{ turno.Dia }}</div>
+    <div><strong>Hora:</strong>{{ turno.Hora }}</div>
+    <div><strong>Estado:</strong> {{ turno.estadoTurno }}</div>
+
+    <button
+      *ngIf="turno.estadoTurno === 'activo'"
+      (click)="aceptarTurno(turno)"
+    >
+      Aceptar Turno
+    </button>
+    <button
+      *ngIf="turno.estadoTurno === 'aceptado'"
+      (click)="cancelarTurno(turno)"
+    >
+      Cancelar Turno
+    </button>
+
+    <button
+      *ngIf="turno.estadoTurno === 'activo'"
+      (click)="rechazarTurno(turno)"
+    >
+      Rechazar turno
+    </button>
+
+    <button
+      *ngIf="
+        turno.estadoTurno === 'aceptado' &&
+        usuarioActual.nivel === 'Especialista'
+      "
+    >
+      Finalizar turno
+    </button>
+
+    <div *ngIf="turno.mostrarComentario">
+      <textarea
+        [(ngModel)]="turno.comentario"
+        placeholder="Escribe el motivo de la cancelacion"
+      ></textarea>
+      <button (click)="guardarComentario(turno)">Guardar comentario</button>
+    </div>
+
+    <button
+      *ngIf="
+        turno.estadoTurno === 'cancelado' ||
+        turno.estadoTurno === 'finalizado' ||
+        turno.estadoTurno === 'rechazado'
+      "
+      (click)="mostrarResenia(turno)"
+    >
+      Ver resenia
+    </button>
+
+    <div *ngIf="turno.resenia">
+      <strong>Resenia:</strong>
+      <p>{{ turno.comentarioCancelacion }}</p>
+      <p>{{ turno.comentarioCancelacionEspecialista }}</p>
+      <p>{{ turno.comentarioCancelacionPaciente }}</p>
+    </div>
+
+    <button
+      *ngIf="
+        turno.estadoTurno === 'finalizado' && this.tipoUsuario === 'Paciente'
+      "
+    >
+      Completar encuesta
+    </button>
+    <button
+      *ngIf="
+        turno.estadoTurno === 'finalizado' && this.tipoUsuario === 'Paciente'
+      "
+    >
+      Calificar Atencion
+    </button>
+  </div>
 </div>
+
 <button routerLink="/home">Volver</button>

@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+/* Asegura que el body y el html ocupen todo el tamaño disponible */
+html,
+body {
+  height: 100%;
+  margin: 0; /* Elimina el margen por defecto del body */
+}
+
+/* Barra superior con diseño flexible */
+.contenedor {
+  display: flex;
+  justify-content: space-around; /* Distribuye los botones de forma equidistante */
+  align-items: center; /* Centra los botones verticalmente */
+  background-color: #007bff; /* Fondo azul */
+  padding: 10px 0; /* Espaciado vertical */
+  position: sticky; /* Fija la barra en la parte superior */
+  top: 0;
+  width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
+  box-sizing: border-box; /* Asegura que el padding se incluya en el ancho */
+  z-index: 1000; /* Asegura que la barra esté por encima de otros elementos */
+}
+
+/* Estilo para los botones */
+button {
+  background-color: #ffffff; /* Fondo blanco para los botones */
+  color: #007bff; /* Color de texto azul */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Efecto hover para los botones */
+button:hover {
+  background-color: #0056b3; /* Fondo azul oscuro al pasar el mouse */
+  color: white; /* Cambia el texto a blanco */
+}
+
+/* Contenido debajo de la barra */
+.contenido-bajo-barra {
+  padding: 20px;
+  margin-top: 20px; /* Da espacio después de la barra */
+  min-height: calc(
+    100vh - 60px
+  ); /* Asegura que el contenido ocupe el espacio restante */
+}

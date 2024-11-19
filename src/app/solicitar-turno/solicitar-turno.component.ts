@@ -31,6 +31,7 @@ export class SolicitarTurnoComponent {
   horarioSeleccionado: string | null = null;
 
   usuarioActual: any = {};
+  usuarioPedido: any = {};
 
   horariosOcupados: string[] = [];
 
@@ -59,9 +60,14 @@ export class SolicitarTurnoComponent {
     this.especialistas = await this.userService.getEspecialistas();
     this.especialidades = this.obtenerEspecialidadesUnicas();
     this.usuarioActual = this.userService.getUsuarioActual();
+    this.usuarioPedido = await this.userService.traerUsuarioPedido(
+      this.usuarioActual
+    );
+    this.turnoSolicitado.nombrePaciente = this.usuarioPedido.nombre || '';
     this.especialistasFiltrados = this.especialistas;
-    this.turnoSolicitado.nombrePaciente = this.usuarioActual.nombre || null;
     this.turnoSolicitado.uidPaciente = this.usuarioActual.uid;
+
+    console.log('Usuario actualmente logueado: ', this.usuarioPedido);
   }
 
   limpiarCampos() {
@@ -78,7 +84,7 @@ export class SolicitarTurnoComponent {
       Dia: '',
       Fecha: '',
       Hora: '',
-      nombrePaciente: this.usuarioActual.nombre || '',
+      nombrePaciente: '',
       nombreEspecialista: '',
       especialidad: '',
       uidPaciente: this.usuarioActual.uid || '',
@@ -182,27 +188,29 @@ export class SolicitarTurnoComponent {
     }
   }
 
-  onEspecialidadSeleccionada() {
-    this.especialistasFiltrados = this.especialistas.filter((especialista) =>
-      especialista.especialidades.includes(
-        this.especialidadEspecialistaSeleccionado
-      )
-    );
+  onEspecialidadSeleccionada(especialidadMetodo: any) {
+    this.especialidadEspecialistaSeleccionado = especialidadMetodo;
   }
 
-  onEspecialistaSeleccionado() {
+  getImagenEspecialidad(especialidad: string) {
+    const nombreImagen =
+      especialidad.toLocaleLowerCase().replace(/ /g, '_') + '.jpg';
+    return `especialidades/${nombreImagen}` || 'especialidades/default.png';
+  }
+
+  onEspecialistaSeleccionado(especialistaMetodo: any) {
     this.especialistaSeleccionado = this.especialistas.find(
-      (especialista) => especialista.nombre == this.nombreEspecialista
+      (especialista) => especialista.nombre == especialistaMetodo.nombre
     );
 
-    if (
-      this.especialistaSeleccionado.especialidades.includes(
-        this.especialidadEspecialistaSeleccionado!
-      )
-    ) {
-      this.especialidadEspecialistaSeleccionado =
-        this.especialidadEspecialistaSeleccionado;
+    if (this.especialistaSeleccionado) {
+      this.nombreEspecialista = this.especialistaSeleccionado.nombre; // Asignar aquí
+      this.especialidades = this.especialistaSeleccionado.especialidades || [];
     }
+    console.log(
+      'especialista seleccionado metodo',
+      this.especialistaSeleccionado
+    );
 
     this.generarProximosDias(15);
     console.log(this.especialistaSeleccionado);
@@ -223,30 +231,34 @@ export class SolicitarTurnoComponent {
   }
 
   async cargarHorariosOcupados() {
-    if (this.fechaTurnoSeleccionada && this.especialistaSeleccionado) {
-      this.horariosOcupados = await this.userService.obtenerTurnosOcupados(
-        this.especialistaSeleccionado.uid,
-        this.fechaTurnoSeleccionada
-      );
-      console.log('Entra a este if siquiera?');
+    if (this.fechaTurnoSeleccionada && this.especialistaSeleccionado?.uid) {
+      try {
+        this.horariosOcupados = await this.userService.obtenerTurnosOcupados(
+          this.especialistaSeleccionado.uid,
+          this.fechaTurnoSeleccionada
+        );
+        console.log('Horarios ocupados cargados: ', this.horariosOcupados);
+      } catch (error) {
+        console.error('Error al cargar los horarios ocupados: ', error);
+      }
     }
-    console.log('HorarioOcupado: ', this.fechaTurnoSeleccionada);
-    console.log('Array horarios Ocupados: ', this.horariosOcupados);
+    // console.log('HorarioOcupado: ', this.fechaTurnoSeleccionada);
+    // console.log('Array horarios Ocupados: ', this.horariosOcupados);
   }
 
   async sacarTurno() {
     this.usuarioActual = this.userService.getUsuarioActual();
-    // this.turnoSolicitado.especialidad = this.especialidad;
     this.turnoSolicitado.especialidad =
       this.especialidadEspecialistaSeleccionado;
     this.turnoSolicitado.Dia = this.diaSeleccionado;
 
     this.turnoSolicitado.nombreEspecialista = this.nombreEspecialista || '';
+    this.turnoSolicitado.nombrePaciente = this.usuarioPedido.nombre || '';
 
     try {
       const turnoExistentes =
         await this.userService.obtenerTurnosPorEspecialista(
-          this.especialistaSeleccionado.uid
+          this.especialistaSeleccionado
         );
 
       const turnoFiltrado = turnoExistentes.find(

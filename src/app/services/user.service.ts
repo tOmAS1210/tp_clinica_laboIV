@@ -11,6 +11,7 @@ import {
   signOut,
   User,
 } from '@angular/fire/auth';
+import { update } from '@angular/fire/database';
 import {
   addDoc,
   collection,
@@ -350,12 +351,85 @@ export class UserService {
     }
   }
 
+  async agregarCampoExtraTurno(
+    uidPaciente: string,
+    campo: string,
+    valor: any,
+    fecha: string,
+    hora: string
+  ): Promise<void> {
+    try {
+      const turnosCollectionRef = collection(this.firestore, 'Turnos');
+
+      const q = query(
+        turnosCollectionRef,
+        where('uidPaciente', '==', uidPaciente),
+        where('Fecha', '==', fecha),
+        where('Hora', '==', hora)
+      );
+
+      const querySnapShot = await getDocs(q);
+      if (!querySnapShot.empty) {
+        const turnoDoc = querySnapShot.docs[0];
+        const turnoDocRef = doc(this.firestore, `Turnos/${turnoDoc.id}`);
+
+        await updateDoc(turnoDocRef, { [campo]: valor });
+        console.log(
+          `Campo ${campo} agregado al turno con fecha ${fecha} y hora ${hora} para el paciente ${uidPaciente}`
+        );
+      } else {
+        console.log(
+          `No se encontró ningún turno para la fecha ${fecha}, hora ${hora} y paciente ${uidPaciente}`
+        );
+      }
+    } catch (error) {
+      console.error('Error al agregar el campo: ', error);
+    }
+  }
+
+  async agregarCampoExtraTurnoEspecialista(
+    uidEspecialista: string,
+    campo: string,
+    valor: any,
+    fecha: string,
+    hora: string
+  ): Promise<void> {
+    try {
+      const turnosCollectionRef = collection(this.firestore, 'Turnos');
+
+      const q = query(
+        turnosCollectionRef,
+        where('especialistaId', '==', uidEspecialista),
+        where('Fecha', '==', fecha),
+        where('Hora', '==', hora)
+      );
+
+      const querySnapShot = await getDocs(q);
+      if (!querySnapShot.empty) {
+        const turnoDoc = querySnapShot.docs[0];
+        const turnoDocRef = doc(this.firestore, `Turnos/${turnoDoc.id}`);
+
+        await updateDoc(turnoDocRef, { [campo]: valor });
+        console.log(
+          `Campo ${campo} agregado al turno con fecha ${fecha} y hora ${hora} para el paciente ${uidEspecialista}`
+        );
+      } else {
+        console.log(
+          `No se encontró ningún turno para la fecha ${fecha}, hora ${hora} y paciente ${uidEspecialista}`
+        );
+      }
+    } catch (error) {
+      console.error('Error al agregar el campo: ', error);
+    }
+  }
+
   async agregarTurno(especialistaId: string, turnoDato: any): Promise<void> {
     try {
       const turnoRef = collection(this.firestore, 'Turnos');
       await addDoc(turnoRef, {
         ...turnoDato,
         especialistaId: especialistaId,
+        estadoTurno: 'activo',
       });
       console.log('Turno agregado correctamente');
     } catch (error) {
@@ -363,10 +437,41 @@ export class UserService {
     }
   }
 
-  async obtenerTurnosPorEspecialista(especialistaId: string) {
+  async obtenerAllTurnos() {
     try {
       const turnosRef = collection(this.firestore, 'Turnos');
-      const q = query(turnosRef, where('especialistaId', '==', especialistaId));
+      const q = query(turnosRef);
+
+      const turnosSnapshot = await getDocs(q);
+      const turnos = turnosSnapshot.docs.map((doc) => doc.data());
+      return turnos;
+    } catch (error) {
+      console.error('Error al obtener los turnos del especialista: ', error);
+      return [];
+    }
+  }
+
+  async obtenerTurnosPorEspecialista(especialista: any) {
+    try {
+      const turnosRef = collection(this.firestore, 'Turnos');
+      const q = query(
+        turnosRef,
+        where('especialistaId', '==', especialista.uid)
+      );
+
+      const turnosSnapshot = await getDocs(q);
+      const turnos = turnosSnapshot.docs.map((doc) => doc.data());
+      return turnos;
+    } catch (error) {
+      console.error('Error al obtener los turnos del especialista: ', error);
+      return [];
+    }
+  }
+
+  async obtenerTurnosPorPacientes(paciente: any) {
+    try {
+      const turnosRef = collection(this.firestore, 'Turnos');
+      const q = query(turnosRef, where('uidPaciente', '==', paciente.uid));
 
       const turnosSnapshot = await getDocs(q);
       const turnos = turnosSnapshot.docs.map((doc) => doc.data());

@@ -10,7 +10,7 @@ import { MiPerfilComponent } from '../mi-perfil/mi-perfil.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule, MiPerfilComponent],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   usuarioEspecialista: any;
   nivel: any = '';
   usuarioActual: any;
+  usuarioActualCamposCompletos: any = {};
 
   constructor(
     private auth: Auth,
@@ -27,7 +28,8 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.usuarioActual = this.userService.getUsuarioActual();
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {
         console.log('Usuario actual: ', user);
@@ -35,6 +37,8 @@ export class HomeComponent implements OnInit {
         console.log('Nivel usuario: ', this.nivel);
       }
     });
+    this.usuarioActualCamposCompletos =
+      await this.userService.traerUsuarioPedido(this.usuarioActual);
   }
 
   desloguear() {
