@@ -1,27 +1,16 @@
 # Tp2
+Explicacion de mi pagina hasta el momento
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
+Tendra 2 botones en los que podra o registrarse para crear una cuenta nueva, o si ya posee una, simplemente loguearse a la pagina
+![image](https://github.com/user-attachments/assets/5a87b41d-99cb-449c-99f0-ae32a6f3c54d)
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Podra elegir crearse una cuenta como paciente o como especialista
+![image](https://github.com/user-attachments/assets/262543d0-2c7e-4fd5-b821-7b82a19563b4)
 
-## Code scaffolding
+Luego de crearse una cuenta, solo debe de ingresar su correo y contrasenia para poder loguearse, siempre y cuando antes haya verificado su correo por el link que se le envio automaticamente
+![image](https://github.com/user-attachments/assets/2e700e79-ed12-42eb-8251-16ccf4a4315c)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Una vez dentro de la pagina, podra hacer varias cosas, como solicitar un turno, ver los turnos solicitados, cancelados o finalizados, ver su perfil con sus datos o simplemente desloguearse de la pagina
+![image](https://github.com/user-attachments/assets/2546e2e7-6fef-4ea8-affd-61308aa7e6d3)
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
