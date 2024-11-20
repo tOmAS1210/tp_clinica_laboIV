@@ -437,6 +437,68 @@ export class UserService {
     }
   }
 
+  async guardarHistoriaClinica(
+    uidPaciente: string,
+    historiaClinica: any,
+    fechaHistoriaClinica: string,
+    horaHistoriaClinica: string,
+    uidEspecialista: string,
+    nombreEspecialista: string,
+    especialidadEspecialista: string
+  ) {
+    // Comprobar si el documento del paciente existe
+    const pacienteSnapshot = await getDocs(
+      query(
+        collection(this.firestore, 'Pacientes'),
+        where('uid', '==', uidPaciente)
+      )
+    );
+
+    if (!pacienteSnapshot.empty) {
+      // Crear referencia a la subcolección `historiaClinicas` dentro del paciente encontrado
+      const historiaClinicaRef = doc(
+        this.firestore,
+        `Pacientes/${uidPaciente}/historiaClinicas/${Date.now()}` // UID único para cada historia clínica
+      );
+
+      // Combinar los datos
+      const datosCompletos = {
+        ...historiaClinica,
+        fechaHistoriaClinica,
+        horaHistoriaClinica,
+        uidEspecialista,
+        nombreEspecialista,
+        especialidadEspecialista,
+      };
+
+      // Guardar la historia clínica en la subcolección
+      return setDoc(historiaClinicaRef, datosCompletos, { merge: true });
+    } else {
+      throw new Error('No se encontró un paciente con ese UID.');
+    }
+  }
+
+  async obtenerHistorialClinico(uidPaciente: string) {
+    try {
+      const historialClinicoRef = collection(
+        this.firestore,
+        `Pacientes/${uidPaciente}/historiaClinicas`
+      );
+
+      const snapShot = await getDocs(historialClinicoRef);
+
+      const historialClinico = snapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      return historialClinico;
+    } catch (error) {
+      console.error('Error al obtener el historial clinico: ', error);
+      throw new Error('No se pudo obtener el historial clinico del paciente.');
+    }
+  }
+
   async obtenerAllTurnos() {
     try {
       const turnosRef = collection(this.firestore, 'Turnos');

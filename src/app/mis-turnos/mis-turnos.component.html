@@ -19,20 +19,23 @@
     <div><strong>Estado:</strong> {{ turno.estadoTurno }}</div>
 
     <button
-      *ngIf="turno.estadoTurno === 'activo'"
+      *ngIf="
+        turno.estadoTurno === 'activo' && this.tipoUsuario === 'Especialista'
+      "
       (click)="aceptarTurno(turno)"
     >
       Aceptar Turno
     </button>
+
     <button
-      *ngIf="turno.estadoTurno === 'aceptado'"
+      *ngIf="turno.estadoTurno === 'aceptado' || turno.estadoTurno === 'activo'"
       (click)="cancelarTurno(turno)"
     >
       Cancelar Turno
     </button>
 
     <button
-      *ngIf="turno.estadoTurno === 'activo'"
+      *ngIf="turno.estadoTurno === 'activo' && tipoUsuario === 'Especialista'"
       (click)="rechazarTurno(turno)"
     >
       Rechazar turno
@@ -43,9 +46,79 @@
         turno.estadoTurno === 'aceptado' &&
         usuarioActual.nivel === 'Especialista'
       "
+      (click)="finalizarTurno(turno)"
     >
       Finalizar turno
     </button>
+
+    <button
+      *ngIf="
+        turno.estadoTurno === 'finalizado' &&
+        usuarioActual.nivel === 'Especialista'
+      "
+      (click)="mostrarFormularioHistoriaClinica(turno)"
+    >
+      Historia Clinica
+    </button>
+
+    <div *ngIf="turno.mostrarFormularioHistoriaClinica">
+      <h3>Historia Clínica</h3>
+      <form (ngSubmit)="guardarHistoriaClinica(turno)">
+        <div>
+          <label for="altura">Altura (cm):</label>
+          <input
+            type="number"
+            [(ngModel)]="turno.historiaClinica.altura"
+            name="altura"
+          />
+        </div>
+        <div>
+          <label for="peso">Peso (kg):</label>
+          <input
+            type="number"
+            [(ngModel)]="turno.historiaClinica.peso"
+            name="peso"
+          />
+        </div>
+        <div>
+          <label for="temperatura">Temperatura (°C):</label>
+          <input
+            type="number"
+            [(ngModel)]="turno.historiaClinica.temperatura"
+            name="temperatura"
+          />
+        </div>
+        <div>
+          <label for="presion">Presión:</label>
+          <input
+            type="text"
+            [(ngModel)]="turno.historiaClinica.presion"
+            name="presion"
+          />
+        </div>
+        <div>
+          <h4>Datos Adicionales</h4>
+          <div
+            *ngFor="
+              let dato of turno.historiaClinica.datosDinamicos;
+              let i = index
+            "
+          >
+            <label>Clave:</label>
+            <input type="text" [(ngModel)]="dato.clave" [name]="'clave' + i" />
+            <label>Valor:</label>
+            <input type="text" [(ngModel)]="dato.valor" [name]="'valor' + i" />
+            <button type="button" (click)="eliminarDatoDinamico(turno, i)">
+              Eliminar
+            </button>
+          </div>
+          <button type="button" (click)="agregarDatoDinamico(turno)">
+            Agregar Dato
+          </button>
+        </div>
+        <button type="submit">Guardar Historia Clínica</button>
+      </form>
+    </div>
 
     <div *ngIf="turno.mostrarComentario">
       <textarea
@@ -71,6 +144,7 @@
       <p>{{ turno.comentarioCancelacion }}</p>
       <p>{{ turno.comentarioCancelacionEspecialista }}</p>
       <p>{{ turno.comentarioCancelacionPaciente }}</p>
+      <p>{{ turno.comentarioCancelacionAdmin }}</p>
     </div>
 
     <button

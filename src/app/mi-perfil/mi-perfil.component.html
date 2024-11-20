@@ -86,6 +86,37 @@
       </button>
     </div>
 
+    <div class="contenedor-historialClinico">
+      <h2>Historial Clínico</h2>
+      <div *ngFor="let especialidad of especialidades">
+        <h3>Especialidad: {{ especialidad }}</h3>
+        <ul>
+          <li *ngFor="let historia of historialesPorEspecialidad[especialidad]">
+            <button (click)="toggleVisibilidad(historia)">
+              {{ historia.visible ? "Ocultar" : "Ver" }} Fecha:
+              {{ historia.fechaHistoriaClinica }}
+              Hora: {{ historia.horaHistoriaClinica }}
+            </button>
+            <div *ngIf="historia.visible">
+              <p><strong>Fecha:</strong> {{ historia.fechaHistoriaClinica }}</p>
+              <p><strong>Hora:</strong> {{ historia.horaHistoriaClinica }}</p>
+              <p><strong>Altura:</strong> {{ historia.altura }}</p>
+              <p><strong>Peso:</strong> {{ historia.peso }}</p>
+              <p><strong>Presion:</strong> {{ historia.presion }}</p>
+              <p><strong>Temperatura:</strong> {{ historia.temperatura }}</p>
+              <p><strong>Datos Dinámicos:</strong></p>
+              <ul>
+                <li *ngFor="let dato of historia.datosDinamicos">
+                  <strong>Clave:</strong> {{ dato.clave }} -
+                  <strong>Valor:</strong> {{ dato.valor }}
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <button class="volver" routerLink="/home">Volver</button>
   </div>
 </div>

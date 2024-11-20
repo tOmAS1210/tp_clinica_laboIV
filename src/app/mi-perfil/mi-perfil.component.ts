@@ -18,12 +18,14 @@ export class MiPerfilComponent implements OnInit {
   usuarioActual: any = {};
   especialidadesUsuario: string[] = [];
   nivel: any;
-  //horariosDisponibilidad: string[] = [];
   diasDisponibilidad: string[] = [];
 
   anioActual: number = new Date().getFullYear();
   mesActual: number = new Date().getMonth() + 1;
   diasDelMes: { dia: number; diaSemana: string }[] = [];
+
+  historialClinico: any[] = [];
+  historialesPorEspecialidad: { [especialidad: string]: any[] } = {};
 
   constructor(
     private userService: UserService,
@@ -66,7 +68,19 @@ export class MiPerfilComponent implements OnInit {
         this.especialidadesUsuario = this.usuarioActual.especialidades;
       }
       console.log('el usuario actual para mi perfil es:', this.usuarioActual);
+
+      this.historialClinico = await this.userService.obtenerHistorialClinico(
+        this.usuarioActual.uid
+      );
+      console.log('Historial clinico: ', this.historialClinico);
     }
+
+    this.historialClinico = this.historialClinico.map((historia) => ({
+      ...historia,
+      visible: false, // Inicialmente, todos los historiales están ocultos
+    }));
+
+    this.historialClinicoSeparados();
 
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -75,5 +89,27 @@ export class MiPerfilComponent implements OnInit {
         console.log('Nivel usuario: ', this.nivel);
       }
     });
+  }
+
+  historialClinicoSeparados() {
+    this.historialesPorEspecialidad = this.historialClinico.reduce(
+      (acc, historia) => {
+        const especialidad = historia.especialidadEspecialista;
+        if (!acc[especialidad]) {
+          acc[especialidad] = [];
+        }
+        acc[especialidad].push(historia);
+        return acc;
+      },
+      {}
+    );
+  }
+
+  toggleVisibilidad(historia: any) {
+    historia.visible = !historia.visible;
+  }
+
+  get especialidades(): string[] {
+    return Object.keys(this.historialesPorEspecialidad);
   }
 }
