@@ -4,19 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 import { Router, RouterLink } from '@angular/router';
-import { NgxCaptchaModule } from 'ngx-captcha'; // Usamos ngx-captcha
-import { RecaptchaModule } from 'ng-recaptcha';
+// import { NgxCaptchaModule } from 'ngx-captcha'; // Usamos ngx-captcha
+// import { RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    RouterLink,
-    NgxCaptchaModule,
-    RecaptchaModule,
-  ],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añadir esto si el captcha es un web component
@@ -50,11 +44,11 @@ export class RegisterComponent {
   constructor(private userService: UserService, private router: Router) {}
   bandera = 0;
 
-  resolved(captchaResponse: any) {
-    this.captcha = captchaResponse;
-    this.validacionCaptcha = true;
-    console.log(`Captcha response: ${captchaResponse}`);
-  }
+  // resolved(captchaResponse: any) {
+  //   this.captcha = captchaResponse;
+  //   this.validacionCaptcha = true;
+  //   console.log(`Captcha response: ${captchaResponse}`);
+  // }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

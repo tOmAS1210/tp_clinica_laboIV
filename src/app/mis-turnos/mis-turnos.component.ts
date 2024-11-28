@@ -31,6 +31,8 @@ export class MisTurnosComponent implements OnInit {
   tipoUsuario: string = '';
   turnoAceptado = 'noAceptado';
 
+  historiaClinica: any;
+
   async ngOnInit() {
     this.usuarioUid = this.userService.getUsuarioActual();
 
@@ -45,10 +47,12 @@ export class MisTurnosComponent implements OnInit {
         this.turnosPaciente = await this.userService.obtenerTurnosPorPacientes(
           this.usuarioUid
         );
+        await this.cargarHistorialesClinicos();
         this.filtrarTurnosPorUsuario();
       } else if (this.tipoUsuario === 'Especialista') {
         this.turnosEspecialista =
           await this.userService.obtenerTurnosPorEspecialista(this.usuarioUid);
+        await this.cargarHistorialesClinicos();
       }
     }
   }
@@ -61,21 +65,102 @@ export class MisTurnosComponent implements OnInit {
 
   filtrarTurnosInput() {
     const terminoFiltro = this.filtro.toLowerCase();
+
+    const filtrarDatosDinamicos = (datosDinamicos: any[]) => {
+      return datosDinamicos?.some(
+        (dato) =>
+          dato.clave?.toLowerCase().includes(terminoFiltro) ||
+          dato.valor?.toLowerCase().includes(terminoFiltro)
+      );
+    };
+
     if (this.tipoUsuario === 'Paciente') {
       return this.turnosPaciente.filter((turno) => {
         return (
           turno.especialidad.toLowerCase().includes(terminoFiltro) ||
-          turno.nombreEspecialista.toLowerCase().includes(terminoFiltro)
+          turno.nombreEspecialista.toLowerCase().includes(terminoFiltro) ||
+          turno.historiaClinica?.altura?.toString().includes(terminoFiltro) ||
+          turno.historiaClinica?.peso?.toString().includes(terminoFiltro) ||
+          turno.historiaClinica?.temperatura
+            ?.toString()
+            .includes(terminoFiltro) ||
+          turno.historiaClinica?.presion
+            ?.toLowerCase()
+            .includes(terminoFiltro) ||
+          filtrarDatosDinamicos(turno.historiaClinica?.datosDinamicos) ||
+          turno.Fecha.includes(terminoFiltro) ||
+          turno.Hora.includes(terminoFiltro)
         );
       });
     } else if (this.tipoUsuario === 'Especialista') {
-      return this.turnosEspecialista.filter(
-        (turno) =>
+      return this.turnosEspecialista.filter((turno) => {
+        return (
           turno.especialidad.toLowerCase().includes(terminoFiltro) ||
-          turno.nombrePaciente.toLowerCase().includes(terminoFiltro)
-      );
+          turno.nombrePaciente.toLowerCase().includes(terminoFiltro) ||
+          turno.historiaClinica?.altura?.toString().includes(terminoFiltro) ||
+          turno.historiaClinica?.peso?.toString().includes(terminoFiltro) ||
+          turno.historiaClinica?.temperatura
+            ?.toString()
+            .includes(terminoFiltro) ||
+          turno.historiaClinica?.presion
+            ?.toLowerCase()
+            .includes(terminoFiltro) ||
+          filtrarDatosDinamicos(turno.historiaClinica?.datosDinamicos) ||
+          turno.Fecha.includes(terminoFiltro) ||
+          turno.Hora.includes(terminoFiltro)
+        );
+      });
     }
+
     return [];
+  }
+
+  filtrarTurnosPorFechaYHora(fecha: string, hora: string) {
+    const turnosFiltrados = this.turnosPaciente.filter(
+      (turno) => turno.Fecha === fecha && turno.Hora === hora
+    );
+    this.historiaClinica = turnosFiltrados;
+    console.log('Turnos filtrados:', turnosFiltrados);
+    return turnosFiltrados;
+  }
+
+  async cargarHistorialesClinicos() {
+    if (this.tipoUsuario === 'Paciente') {
+      for (const turno of this.turnosPaciente) {
+        if (turno.estadoTurno === 'finalizado') {
+          const historialesClinicos =
+            await this.userService.obtenerHistorialClinico(
+              this.usuarioActual.uid
+            );
+
+          const historialCoincidente = historialesClinicos.find(
+            (historial: any) =>
+              historial.fechaHistoriaClinica === turno.Fecha &&
+              historial.horaHistoriaClinica === turno.Hora
+          );
+
+          if (historialCoincidente) {
+            turno.historiaClinica = historialCoincidente;
+          }
+        }
+      }
+    } else if (this.tipoUsuario === 'Especialista') {
+      for (const turno of this.turnosEspecialista) {
+        if (turno.estadoTurno === 'finalizado') {
+          const historialesClinicos =
+            await this.userService.obtenerHistorialClinico(turno.uidPaciente);
+
+          const historialCoincidente = historialesClinicos.find(
+            (historial: any) =>
+              historial.Fecha === turno.Fecha && historial.Hora === turno.Hora
+          );
+
+          if (historialCoincidente) {
+            turno.historiaClinica = historialCoincidente;
+          }
+        }
+      }
+    }
   }
 
   aceptarTurno(turno: any) {
@@ -206,6 +291,7 @@ export class MisTurnosComponent implements OnInit {
   guardarComentario(turno: any) {
     this.fechaDiv = turno.Fecha;
     this.horaDiv = turno.Hora;
+    turno.mostrarComentario = true;
 
     if (this.tipoUsuario === 'Paciente') {
       this.userService
@@ -238,6 +324,55 @@ export class MisTurnosComponent implements OnInit {
         })
         .catch((error) => {
           console.error('Error al guardar el comentario', error);
+        });
+    }
+  }
+
+  mostrarCampoCalificacion(turno: any) {
+    this.turnosPaciente.forEach((t) => (t.mostrandoCalificacion = false));
+    turno.mostrandoCalificacion = true;
+    turno.comentarioCalificacion = '';
+  }
+
+  guardarComentarioAtencion(turno: any) {
+    if (
+      !turno.comentarioCalificacion ||
+      turno.comentarioCalificacion.trim() === ''
+    ) {
+      Swal.fire({
+        icon: 'error',
+        title: 'POR FAVOR',
+        text: 'escriba una calificacion antes de guardar',
+        position: 'top',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        background: '#f8d7da',
+        customClass: {
+          popup: 'my-custom-popup',
+        },
+      });
+      return;
+    }
+
+    this.fechaDiv = turno.Fecha;
+    this.horaDiv = turno.Hora;
+
+    if (this.tipoUsuario === 'Paciente') {
+      this.userService
+        .agregarCampoExtraTurno(
+          this.usuarioActual.uid,
+          'comentarioAtencionEspecialista',
+          turno.comentarioCalificacion,
+          this.fechaDiv,
+          this.horaDiv
+        )
+        .then(() => {
+          console.log('Calificacion guardada exitosamente ');
+          turno.mostrarComentarioCalificacion = false;
+        })
+        .catch((error) => {
+          console.error('Error al guardar la calificacion', error);
         });
     }
   }
@@ -282,7 +417,19 @@ export class MisTurnosComponent implements OnInit {
       !historiaClinica.temperatura ||
       !historiaClinica.presion
     ) {
-      alert('Por favor completa todos los datos fijos.');
+      Swal.fire({
+        icon: 'error',
+        title: 'POR FAVOR',
+        text: 'complete todos los datos fijos',
+        position: 'top',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        background: '#f8d7da',
+        customClass: {
+          popup: 'my-custom-popup',
+        },
+      });
       return;
     }
 
@@ -297,7 +444,19 @@ export class MisTurnosComponent implements OnInit {
         turno.especialidad
       )
       .then(() => {
-        alert('Historia clínica guardada exitosamente.');
+        Swal.fire({
+          title: 'Buen Trabajo!',
+          text: 'Historia clinica guardada exitosamente',
+          icon: 'success',
+          position: 'top',
+          toast: true,
+          showConfirmButton: false,
+          timer: 3000,
+          background: '#f8d7da',
+          customClass: {
+            popup: 'my-custom-popup',
+          },
+        });
         turno.mostrarFormularioHistoriaClinica = false;
         turno.estadoTurno = 'finalizado';
         this.cdr.detectChanges();
@@ -307,103 +466,64 @@ export class MisTurnosComponent implements OnInit {
       });
   }
 
-  // finalizarTurnoHistoriaClinica(turno: any) {
-  //   Swal.fire({
-  //     title: 'Historia Clínica',
-  //     html: `
-  //       <div>
-  //         <label for="altura">Altura (cm):</label>
-  //         <input id="altura" type="number" class="swal2-input" placeholder="Altura">
-  //         <label for="peso">Peso (kg):</label>
-  //         <input id="peso" type="number" class="swal2-input" placeholder="Peso">
-  //         <label for="temperatura">Temperatura (°C):</label>
-  //         <input id="temperatura" type="number" class="swal2-input" placeholder="Temperatura">
-  //         <label for="presion">Presión:</label>
-  //         <input id="presion" type="text" class="swal2-input" placeholder="Presión">
+  mostrarCampoEncuesta(turno: any) {
+    // Asegúrate de que solo un turno a la vez muestre el campo de la encuesta
+    this.turnosPaciente.forEach((t) => (t.mostrandoEncuesta = false));
+    turno.mostrandoEncuesta = true;
+    turno.calificacionAtencion = null; // Inicializa la calificación en null
+  }
 
-  //         <hr>
-  //         <div id="dynamic-fields">
-  //           <label>Datos adicionales</label>
-  //           <div class="dynamic-field">
-  //             <input type="text" class="swal2-input dynamic-key" placeholder="Clave">
-  //             <input type="text" class="swal2-input dynamic-value" placeholder="Valor">
-  //           </div>
-  //         </div>
-  //         <button id="add-field" type="button" style="margin: 10px; padding: 5px;">Agregar campo</button>
-  //       </div>
-  //     `,
-  //     focusConfirm: false,
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Guardar',
-  //     cancelButtonText: 'Cancelar',
-  //     preConfirm: () => {
-  //       const altura = (document.getElementById('altura') as HTMLInputElement)
-  //         .value;
-  //       const peso = (document.getElementById('peso') as HTMLInputElement)
-  //         .value;
-  //       const temperatura = (
-  //         document.getElementById('temperatura') as HTMLInputElement
-  //       ).value;
-  //       const presion = (document.getElementById('presion') as HTMLInputElement)
-  //         .value;
+  guardarEncuesta(turno: any) {
+    if (
+      turno.calificacionAtencion === null ||
+      turno.calificacionAtencion < 0 ||
+      turno.calificacionAtencion > 10
+    ) {
+      Swal.fire({
+        icon: 'error',
+        title: 'POR FAVOR',
+        text: 'ingrese una calificacion entre 0 y 10',
+        position: 'top',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        background: '#f8d7da',
+        customClass: {
+          popup: 'my-custom-popup',
+        },
+      });
+      return;
+    }
 
-  //       const dynamicKeys = Array.from(
-  //         document.querySelectorAll('.dynamic-key')
-  //       ) as HTMLInputElement[];
-  //       const dynamicValues = Array.from(
-  //         document.querySelectorAll('.dynamic-value')
-  //       ) as HTMLInputElement[];
-
-  //       const datosDinamicos: Record<string, string> = {};
-  //       dynamicKeys.forEach((keyField, index) => {
-  //         const key = keyField.value.trim();
-  //         const value = dynamicValues[index].value.trim();
-  //         if (key && value) {
-  //           datosDinamicos[key] = value;
-  //         }
-  //       });
-
-  //       if (!altura || !peso || !temperatura || !presion) {
-  //         Swal.showValidationMessage(
-  //           'Por favor, completa todos los campos fijos'
-  //         );
-  //         return null;
-  //       }
-
-  //       return {
-  //         altura: parseFloat(altura),
-  //         peso: parseFloat(peso),
-  //         temperatura: parseFloat(temperatura),
-  //         presion,
-  //         datosDinamicos,
-  //       };
-  //     },
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       const historiaClinica = result.value;
-  //       console.log('Historia Clínica:', historiaClinica);
-
-  //       // Lógica para guardar la historia clínica, por ejemplo:
-  //       this.guardarHistoriaClinica(turno);
-  //     }
-  //   });
-
-  //   // Agregar funcionalidad dinámica de campos
-  //   setTimeout(() => {
-  //     const addFieldButton = document.getElementById('add-field');
-  //     addFieldButton?.addEventListener('click', () => {
-  //       const dynamicFieldsContainer =
-  //         document.getElementById('dynamic-fields');
-  //       if (dynamicFieldsContainer) {
-  //         const newField = document.createElement('div');
-  //         newField.className = 'dynamic-field';
-  //         newField.innerHTML = `
-  //           <input type="text" class="swal2-input dynamic-key" placeholder="Clave">
-  //           <input type="text" class="swal2-input dynamic-value" placeholder="Valor">
-  //         `;
-  //         dynamicFieldsContainer.appendChild(newField);
-  //       }
-  //     });
-  //   }, 0);
-  // }
+    this.userService
+      .agregarCampoExtraTurno(
+        this.usuarioActual.uid,
+        'calificacionAtencionEspecialista',
+        turno.calificacionAtencion,
+        turno.Fecha,
+        turno.Hora
+      )
+      .then(() => {
+        Swal.fire({
+          title: 'Good job!',
+          text: 'Calificacion guardada exitosamente',
+          icon: 'success',
+          position: 'top',
+          toast: true,
+          showConfirmButton: false,
+          timer: 3000,
+          background: '#f8d7da',
+          customClass: {
+            popup: 'my-custom-popup',
+          },
+        });
+        turno.mostrandoEncuesta = false;
+      })
+      .catch((error) => {
+        console.error('Error al guardar la calificación', error);
+      });
+  }
 }
+
+// necesito que el filtrarTurnos, ademas de filtrar por especialidad,
+// nombreEspecialista y nombrePaciente, tambien filtre por fecha, hora, estado

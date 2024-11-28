@@ -24,6 +24,27 @@
     Turnos
   </button>
 
+  <button
+    routerLink="/usuarios"
+    *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
+  >
+    Usuarios
+  </button>
+
+  <button
+    routerLink="/graficoEstadisticas"
+    *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
+  >
+    Graficos y Estadisticas
+  </button>
+
+  <button
+    routerLink="/pacientes"
+    *ngIf="usuarioActualCamposCompletos.nivel === 'Especialista'"
+  >
+    Pacientes
+  </button>
+
   <button routerLink="/miPerfil">Mi perfil</button>
 
   <button (click)="desloguear()">Desloguear</button>

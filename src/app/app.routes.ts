@@ -69,4 +69,18 @@ export const routes: Routes = [
         (c) => c.MiPerfilComponent
       ),
   },
+
+  {
+    path: 'usuarios',
+    loadComponent: () =>
+      import('./usuarios/usuarios.component').then((c) => c.UsuariosComponent),
+  },
+
+  {
+    path: 'pacientes',
+    loadComponent: () =>
+      import('./pacientes/pacientes.component').then(
+        (c) => c.PacientesComponent
+      ),
+  },
 ];

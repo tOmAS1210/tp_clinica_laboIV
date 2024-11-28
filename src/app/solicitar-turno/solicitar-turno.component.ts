@@ -195,7 +195,12 @@ export class SolicitarTurnoComponent {
   getImagenEspecialidad(especialidad: string) {
     const nombreImagen =
       especialidad.toLocaleLowerCase().replace(/ /g, '_') + '.jpg';
-    return `especialidades/${nombreImagen}` || 'especialidades/default.png';
+    return `especialidades/${nombreImagen}`;
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'especialidades/default.jpg'; // Ruta de la imagen por defecto
   }
 
   onEspecialistaSeleccionado(especialistaMetodo: any) {

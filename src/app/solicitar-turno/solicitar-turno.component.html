@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div class="container">
+  <div class="formulario-contenedor">
     <div class="sacar-turno">
       <h1>Seleccione especialista</h1>
       <div class="profesionales-container">
@@ -35,6 +35,7 @@
             <img
               [src]="getImagenEspecialidad(especialidad)"
               alt="{{ especialidad }}"
+              (error)="onImageError($event)"
             />
             <span>{{ especialidad }}</span>
           </button>

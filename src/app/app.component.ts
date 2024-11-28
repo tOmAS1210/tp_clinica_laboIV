@@ -9,14 +9,13 @@ import { RouterOutlet } from '@angular/router';
 import { MuyLargoPipe } from './pipes/muy-largo.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
 import { UserService } from './services/user.service';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RecaptchaModule],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   template: `<re-captcha

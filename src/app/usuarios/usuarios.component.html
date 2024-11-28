@@ -1,0 +1,76 @@
+<!-- <div class="container-principal">
+  <div *ngFor="let paciente of pacientes">
+    <h3>Nombre y Apellido: {{ paciente.nombre }} {{ paciente.apellido }}</h3>
+    <p><strong>Historial Clínico:</strong></p>
+
+    <ng-container *ngIf="tieneHistorial(paciente.uid); else noHistorial">
+      <div *ngFor="let historiaClinica of historialesClinicos">
+        <div *ngIf="historiaClinica.pacienteUid === paciente.uid">
+          <p>
+            <strong>Altura:</strong> {{ historiaClinica.historial.altura }} cm
+          </p>
+          <p><strong>Peso:</strong> {{ historiaClinica.historial.peso }} kg</p>
+          <p>
+            <strong>Temperatura:</strong>
+            {{ historiaClinica.historial.temperatura }} °C
+          </p>
+          <p>
+            <strong>Presión:</strong> {{ historiaClinica.historial.presion }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noHistorial>
+      <p>No se ha encontrado historial clínico para este paciente.</p>
+    </ng-template>
+  </div>
+</div>
+
+<button routerLink="/home">Volver</button> -->
+
+<div class="volver-container">
+  <button routerLink="/home">Volver</button>
+</div>
+
+<div class="container-principal">
+  <div class="paciente-card" *ngFor="let paciente of pacientes">
+    <button (click)="descargarInformacionCompleta(paciente)">
+      Descargar Informacion
+    </button>
+    <h3>Nombre y Apellido:</h3>
+    <p>{{ paciente.nombre }} {{ paciente.apellido }}</p>
+    <p><strong>Historial Clínico:</strong></p>
+
+    <ng-container *ngIf="tieneHistorial(paciente.uid); else noHistorial">
+      <div
+        class="historial-card"
+        *ngFor="let historiaClinica of historialesClinicos"
+      >
+        <div *ngIf="historiaClinica.pacienteUid === paciente.uid">
+          <p>
+            <strong>Altura:</strong> {{ historiaClinica.historial.altura }} cm
+          </p>
+          <p><strong>Peso:</strong> {{ historiaClinica.historial.peso }} kg</p>
+          <p>
+            <strong>Temperatura:</strong>
+            {{ historiaClinica.historial.temperatura }} °C
+          </p>
+          <p>
+            <strong>Presión:</strong> {{ historiaClinica.historial.presion }}
+          </p>
+          <ul>
+            <li *ngFor="let dato of historiaClinica.historial.datosDinamicos">
+              <strong>Clave:</strong> {{ dato.clave }} - <br />
+              <strong>Valor:</strong> {{ dato.valor }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noHistorial>
+      <p>No se ha encontrado historial clínico para este paciente.</p>
+    </ng-template>
+  </div>
+</div>

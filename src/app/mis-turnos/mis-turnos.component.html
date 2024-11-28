@@ -12,11 +12,45 @@
     </div>
 
     <div><strong>Especialidad:</strong> {{ turno.especialidad }}</div>
-
     <div><strong>Fecha:</strong> {{ turno.Fecha }}</div>
     <div><strong>Día:</strong> {{ turno.Dia }}</div>
     <div><strong>Hora:</strong>{{ turno.Hora }}</div>
     <div><strong>Estado:</strong> {{ turno.estadoTurno }}</div>
+
+    <div *ngIf="turno.historiaClinica && turno.estadoTurno === 'finalizado'">
+      <p><strong>Historial Clínico:</strong></p>
+      <p>Altura: {{ turno.historiaClinica.altura }}</p>
+      <p>Peso: {{ turno.historiaClinica.peso }}</p>
+      <p>Temperatura: {{ turno.historiaClinica.temperatura }}</p>
+      <p>Presión: {{ turno.historiaClinica.presion }}</p>
+      <ul>
+        <li *ngFor="let dato of turno.historiaClinica.datosDinamicos">
+          <strong>Clave:</strong> {{ dato.clave }} - <br />
+          <strong>Valor:</strong> {{ dato.valor }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- <div
+      *ngFor="let turno of filtrarTurnosPorFechaYHora(turno.Fecha, turno.Hora)"
+    >
+      <p>Turno: {{ turno.Fecha }} - {{ turno.Hora }}</p>
+      <div *ngIf="turno.historiaClinica">
+        <p>hola mundo</p>
+        <p><strong>Historial Clínico:</strong></p>
+        <p>Altura: {{ turno.historiaClinica.altura }}</p>
+        <p>Peso: {{ turno.historiaClinica.peso }}</p>
+        <p>Temperatura: {{ turno.historiaClinica.temperatura }}</p>
+        <p>Presión: {{ turno.historiaClinica.presion }}</p>
+        <ul>
+          <li *ngFor="let dato of turno.historiaClinica.datosDinamicos">
+            <strong>Clave:</strong> {{ dato.clave }} - <br />
+            <strong>Valor:</strong>
+            {{ dato.valor }}
+          </li>
+        </ul>
+      </div>
+    </div> -->
 
     <button
       *ngIf="
@@ -123,7 +157,7 @@
     <div *ngIf="turno.mostrarComentario">
       <textarea
         [(ngModel)]="turno.comentario"
-        placeholder="Escribe el motivo de la cancelacion"
+        placeholder="Escriba un comentario"
       ></textarea>
       <button (click)="guardarComentario(turno)">Guardar comentario</button>
     </div>
@@ -151,16 +185,42 @@
       *ngIf="
         turno.estadoTurno === 'finalizado' && this.tipoUsuario === 'Paciente'
       "
+      (click)="mostrarCampoEncuesta(turno)"
     >
       Completar encuesta
     </button>
+
+    <div *ngIf="turno.mostrandoEncuesta">
+      <label for="calificacion">Califica la atención (0 a 10):</label>
+      <input
+        type="number"
+        id="calificacion"
+        [(ngModel)]="turno.calificacionAtencion"
+        min="0"
+        max="10"
+        placeholder="0 - 10"
+      />
+      <button (click)="guardarEncuesta(turno)">Guardar Calificación</button>
+    </div>
+
     <button
       *ngIf="
         turno.estadoTurno === 'finalizado' && this.tipoUsuario === 'Paciente'
       "
+      (click)="mostrarCampoCalificacion(turno)"
     >
       Calificar Atencion
     </button>
+
+    <div *ngIf="turno.mostrandoCalificacion">
+      <textarea
+        [(ngModel)]="turno.comentarioCalificacion"
+        placeholder="Escribe tu calificación aquí"
+      ></textarea>
+      <button (click)="guardarComentarioAtencion(turno)">
+        Guardar Calificación
+      </button>
+    </div>
   </div>
 </div>
 

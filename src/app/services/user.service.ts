@@ -467,6 +467,7 @@ export class UserService {
         fechaHistoriaClinica,
         horaHistoriaClinica,
         uidEspecialista,
+        uidPaciente,
         nombreEspecialista,
         especialidadEspecialista,
       };
@@ -480,6 +481,8 @@ export class UserService {
 
   async obtenerHistorialClinico(uidPaciente: string) {
     try {
+      //console.log('Verificando UID del paciente:', uidPaciente);
+
       const historialClinicoRef = collection(
         this.firestore,
         `Pacientes/${uidPaciente}/historiaClinicas`
@@ -487,11 +490,17 @@ export class UserService {
 
       const snapShot = await getDocs(historialClinicoRef);
 
+      // if (snapShot.empty) {
+      //   console.warn('No se encontraron historiales clínicos.');
+      //   return [];
+      // }
+
       const historialClinico = snapShot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
 
+      //console.log('Historial clínico obtenido:', historialClinico);
       return historialClinico;
     } catch (error) {
       console.error('Error al obtener el historial clinico: ', error);
