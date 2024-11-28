@@ -1,27 +1,35 @@
 # Tp2
+Explicacion de mi pagina hasta el momento
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
+Tendra 2 botones en los que podra o registrarse para crear una cuenta nueva, o si ya posee una, simplemente loguearse a la pagina
+![image](https://github.com/user-attachments/assets/5a87b41d-99cb-449c-99f0-ae32a6f3c54d)
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Podra elegir crearse una cuenta como paciente o como especialista
+![image](https://github.com/user-attachments/assets/262543d0-2c7e-4fd5-b821-7b82a19563b4)
 
-## Code scaffolding
+Luego de crearse una cuenta, solo debe de ingresar su correo y contrasenia para poder loguearse, siempre y cuando antes haya verificado su correo por el link que se le envio automaticamente
+![image](https://github.com/user-attachments/assets/2e700e79-ed12-42eb-8251-16ccf4a4315c)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Una vez dentro de la pagina, podra hacer varias cosas, como solicitar un turno, ver los turnos solicitados, cancelados o finalizados, ver su perfil con sus datos o simplemente desloguearse de la pagina
+![image](https://github.com/user-attachments/assets/2546e2e7-6fef-4ea8-affd-61308aa7e6d3)
 
-## Build
+Solicitar Turnos
+en esa seccion, debera de elegir con que especialista desea ser atendido, elegir la especialidad de ese especialista, si es que tiene mas de uno, luego los dias en los que atiene, y elegir la fecha y hora que se le haga al paciente mas accesible, siempre y cuando ese horario no este ocupado.
+![image](https://github.com/user-attachments/assets/e9498b59-7058-4358-9a3d-fc0c0aafd576)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Mis Turnos
+Aqui lo que podra hacer es ver todos los turnos que saco con cualquier especialista.
+Puede ver sus turnos y saber si estan activos, rechazados, cancelados o finalizados.
+Como paciente, antes de que algun especialista acepte su turno, cancelarlo directamente y debera de dar un motivo por el que lo hace.
+Si se concreto el turno, puede completar una encuesta(asumo que calificando la atencion del especialista) y tambien calificar la atencion mediante un comentario.
 
-## Running unit tests
+![image](https://github.com/user-attachments/assets/7ae7ed92-3395-4722-87dd-48a55b8a5fcb)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Mi Perfil
+En su perfil, vera sus datos, ademas de su historial clinico, separados por especialidad. (mas adelante podra descargarlos como pdf)
+![image](https://github.com/user-attachments/assets/9196a08e-d8bc-4bac-bff5-6fd1a0166356)
 
-## Running end-to-end tests
+ HASTA ACA COMO PACIENTE....... LUEGO FALTARIA ESPECIALISTA Y ADMIN (tengo flojera).
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
