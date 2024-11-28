@@ -83,4 +83,12 @@ export const routes: Routes = [
         (c) => c.PacientesComponent
       ),
   },
+
+  {
+    path: 'graficosEstadisticas',
+    loadComponent: () =>
+      import('./graficos-estadisticas/graficos-estadisticas.component').then(
+        (c) => c.GraficosEstadisticasComponent
+      ),
+  },
 ];

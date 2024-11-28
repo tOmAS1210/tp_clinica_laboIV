@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 import { authGuard } from '../auth.guard';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,22 @@ import { authGuard } from '../auth.guard';
   imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('300ms ease-in', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class LoginComponent implements OnInit {
+  mostrarComponente: boolean = true;
+
   bandera = 0;
 
   pacientes: boolean = false;

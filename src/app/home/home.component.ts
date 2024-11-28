@@ -6,6 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 import { MiPerfilComponent } from '../mi-perfil/mi-perfil.component';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,24 @@ import { MiPerfilComponent } from '../mi-perfil/mi-perfil.component';
   imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  animations: [
+    trigger('slideInFromTop', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)', opacity: 0 }),
+        animate(
+          '300ms ease-out',
+          style({ transform: 'translateY(0)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateY(0)', opacity: 1 }),
+        animate(
+          '300ms ease-in',
+          style({ transform: 'translateY(-100%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
   usuarioAdmin: any;
@@ -21,6 +40,8 @@ export class HomeComponent implements OnInit {
   nivel: any = '';
   usuarioActual: any;
   usuarioActualCamposCompletos: any = {};
+
+  mostrarComponente: boolean = true;
 
   constructor(
     private auth: Auth,

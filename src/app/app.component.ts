@@ -11,6 +11,7 @@ import { HighlightDirective } from './directives/highlight.directive';
 import { UserService } from './services/user.service';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-root',

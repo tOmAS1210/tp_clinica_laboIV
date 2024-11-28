@@ -1,83 +1,85 @@
-<div class="contenedor-tipo">
-  <h1>Complete los datos para poder loguearse</h1>
-</div>
-
-<div class="main-container">
-  <div class="register-wrapper">
-    <div class="container-especialista">
-      <h1>Login</h1>
-
-      <p>Mail</p>
-      <input [(ngModel)]="mail" type="email" placeholder="Mail" />
-      <br />
-
-      <p>Contraseña</p>
-      <input [(ngModel)]="passWord" type="password" placeholder="Password" />
-      <br />
-
-      <div class="buttons">
-        <button (click)="loguearUsuario()">Loguear</button>
-        <button routerLink="/bienvenido">Volver</button>
-      </div>
-    </div>
+<div *ngIf="mostrarComponente" @fadeInOut>
+  <div class="contenedor-tipo">
+    <h1>Complete los datos para poder loguearse</h1>
   </div>
 
-  <div class="access-buttons">
-    <br /><br />
-    <button (click)="autoCompletarPaciente()">
-      <img
-        [src]="paciente1.imagenesPerfil"
-        alt="Cuenta Paciente 1"
-        height="60"
-        width="60"
-      />
-    </button>
-    <button (click)="autoCompletarPaciente2()">
-      <img
-        [src]="paciente2.imagenesPerfil"
-        alt="Cuenta Paciente 2"
-        height="60"
-        width="60"
-      />
-    </button>
-    <button (click)="autoCompletarPaciente3()">
-      <img
-        [src]="paciente3.imagenesPerfil"
-        alt="Cuenta Paciente 3"
-        height="60"
-        width="60"
-      />
-    </button>
-    <p>Pacientes</p>
+  <div class="main-container">
+    <div class="register-wrapper">
+      <div class="container-especialista">
+        <h1>Login</h1>
 
-    <button (click)="autoCompletarEspecialista()">
-      <img
-        [src]="especialista1.imagenesPerfil"
-        alt="Cuenta Especialista 1"
-        height="60"
-        width="60"
-      />
-    </button>
-    <button (click)="autoCompletarEspecialista2()">
-      <img
-        [src]="especialista2.imagenesPerfil"
-        alt="Cuenta Especialista 2"
-        height="60"
-        width="60"
-      />
-    </button>
+        <p>Mail</p>
+        <input [(ngModel)]="mail" type="email" placeholder="Mail" />
+        <br />
 
-    <p>Especialistas</p>
+        <p>Contraseña</p>
+        <input [(ngModel)]="passWord" type="password" placeholder="Password" />
+        <br />
 
-    <br /><br />
-    <button (click)="autoCompletarAdmin()">
-      <img
-        [src]="admin1.imagenesPerfil"
-        alt="Cuenta Admin"
-        height="60"
-        width="60"
-      />
-    </button>
-    <p>Administrador</p>
+        <div class="buttons">
+          <button (click)="loguearUsuario()">Loguear</button>
+          <button routerLink="/bienvenido">Volver</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="access-buttons">
+      <br /><br />
+      <button (click)="autoCompletarPaciente()">
+        <img
+          [src]="paciente1.imagenesPerfil"
+          alt="Cuenta Paciente 1"
+          height="60"
+          width="60"
+        />
+      </button>
+      <button (click)="autoCompletarPaciente2()">
+        <img
+          [src]="paciente2.imagenesPerfil"
+          alt="Cuenta Paciente 2"
+          height="60"
+          width="60"
+        />
+      </button>
+      <button (click)="autoCompletarPaciente3()">
+        <img
+          [src]="paciente3.imagenesPerfil"
+          alt="Cuenta Paciente 3"
+          height="60"
+          width="60"
+        />
+      </button>
+      <p>Pacientes</p>
+
+      <button (click)="autoCompletarEspecialista()">
+        <img
+          [src]="especialista1.imagenesPerfil"
+          alt="Cuenta Especialista 1"
+          height="60"
+          width="60"
+        />
+      </button>
+      <button (click)="autoCompletarEspecialista2()">
+        <img
+          [src]="especialista2.imagenesPerfil"
+          alt="Cuenta Especialista 2"
+          height="60"
+          width="60"
+        />
+      </button>
+
+      <p>Especialistas</p>
+
+      <br /><br />
+      <button (click)="autoCompletarAdmin()">
+        <img
+          [src]="admin1.imagenesPerfil"
+          alt="Cuenta Admin"
+          height="60"
+          width="60"
+        />
+      </button>
+      <p>Administrador</p>
+    </div>
   </div>
 </div>

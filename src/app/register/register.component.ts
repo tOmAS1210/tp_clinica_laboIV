@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 import { Router, RouterLink } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
 // import { NgxCaptchaModule } from 'ngx-captcha'; // Usamos ngx-captcha
 // import { RecaptchaModule } from 'ng-recaptcha';
 
@@ -14,8 +15,22 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añadir esto si el captcha es un web component
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('300ms ease-in', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class RegisterComponent {
+  mostrarComponente: boolean = true;
+
   pacientes: boolean = false;
   especialistas: boolean = false;
 

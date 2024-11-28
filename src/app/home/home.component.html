@@ -1,66 +1,68 @@
-<div class="contenedor">
-  <button routerLink="/seccionUsuarios" *ngIf="nivel === 'Administrador'">
-    Seccion Usuarios
-  </button>
+<div *ngIf="mostrarComponente" @slideInFromTop>
+  <div class="contenedor">
+    <button routerLink="/seccionUsuarios" *ngIf="nivel === 'Administrador'">
+      Seccion Usuarios
+    </button>
 
-  <button
-    routerLink="/solicitarTurnos"
-    *ngIf="nivel === 'Administrador' || nivel === 'Paciente'"
-  >
-    Solicitar Turno
-  </button>
+    <button
+      routerLink="/solicitarTurnos"
+      *ngIf="nivel === 'Administrador' || nivel === 'Paciente'"
+    >
+      Solicitar Turno
+    </button>
 
-  <button
-    routerLink="/misTurnos"
-    *ngIf="usuarioActualCamposCompletos.nivel !== 'Administrador'"
-  >
-    Mis Turnos
-  </button>
+    <button
+      routerLink="/misTurnos"
+      *ngIf="usuarioActualCamposCompletos.nivel !== 'Administrador'"
+    >
+      Mis Turnos
+    </button>
 
-  <button
-    routerLink="/turnos"
-    *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
-  >
-    Turnos
-  </button>
+    <button
+      routerLink="/turnos"
+      *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
+    >
+      Turnos
+    </button>
 
-  <button
-    routerLink="/usuarios"
-    *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
-  >
-    Usuarios
-  </button>
+    <button
+      routerLink="/usuarios"
+      *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
+    >
+      Usuarios
+    </button>
 
-  <button
-    routerLink="/graficoEstadisticas"
-    *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
-  >
-    Graficos y Estadisticas
-  </button>
+    <button
+      routerLink="/graficosEstadisticas"
+      *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
+    >
+      Graficos y Estadisticas
+    </button>
 
-  <button
-    routerLink="/pacientes"
-    *ngIf="usuarioActualCamposCompletos.nivel === 'Especialista'"
-  >
-    Pacientes
-  </button>
+    <button
+      routerLink="/pacientes"
+      *ngIf="usuarioActualCamposCompletos.nivel === 'Especialista'"
+    >
+      Pacientes
+    </button>
 
-  <button routerLink="/miPerfil">Mi perfil</button>
+    <button routerLink="/miPerfil">Mi perfil</button>
 
-  <button (click)="desloguear()">Desloguear</button>
+    <button (click)="desloguear()">Desloguear</button>
 
-  <div class="usuario-info">
-    <span class="nombre-usuario">
-      {{ this.usuarioActualCamposCompletos.nombre }}
-    </span>
-    <img
-      src="{{ this.usuarioActualCamposCompletos.imagenesPerfil }}"
-      alt="imagenUsuario"
-      class="imagen-usuario"
-    />
+    <div class="usuario-info">
+      <span class="nombre-usuario">
+        {{ this.usuarioActualCamposCompletos.nombre }}
+      </span>
+      <img
+        src="{{ this.usuarioActualCamposCompletos.imagenesPerfil }}"
+        alt="imagenUsuario"
+        class="imagen-usuario"
+      />
+    </div>
   </div>
-</div>
 
-<div class="contenido-bajo-barra">
-  <p>hola pipol</p>
+  <div class="contenido-bajo-barra">
+    <p>hola pipol</p>
+  </div>
 </div>
