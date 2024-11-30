@@ -481,8 +481,6 @@ export class UserService {
 
   async obtenerHistorialClinico(uidPaciente: string) {
     try {
-      //console.log('Verificando UID del paciente:', uidPaciente);
-
       const historialClinicoRef = collection(
         this.firestore,
         `Pacientes/${uidPaciente}/historiaClinicas`
@@ -505,6 +503,41 @@ export class UserService {
     } catch (error) {
       console.error('Error al obtener el historial clinico: ', error);
       throw new Error('No se pudo obtener el historial clinico del paciente.');
+    }
+  }
+
+  async obtenerHistorialClinicoEspecialista(
+    uidPaciente: string,
+    uidEspecialista: string
+  ): Promise<any[]> {
+    try {
+      // Referencia a la colección de historiales clínicos del paciente
+      const historialClinicoRef = collection(
+        this.firestore,
+        `Pacientes/${uidPaciente}/historiaClinicas`
+      );
+
+      // Obtén los documentos de la colección
+      const snapShot = await getDocs(historialClinicoRef);
+
+      // Validar y procesar los documentos
+      const historialClinico = snapShot.docs
+        .map((doc) => {
+          const data = doc.data(); // Obtén los datos del documento
+          return {
+            id: doc.id,
+            ...data,
+          };
+        })
+        .filter((historial: any) => {
+          // Verifica que exista uidEspecialista antes de filtrar
+          return historial?.uidEspecialista === uidEspecialista;
+        });
+
+      return historialClinico; // Devuelve los historiales filtrados
+    } catch (error) {
+      console.error('Error al obtener el historial clínico: ', error);
+      throw new Error('No se pudo obtener el historial clínico del paciente.');
     }
   }
 

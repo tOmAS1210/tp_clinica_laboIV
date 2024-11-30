@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import jsPDF from 'jspdf';
 
@@ -11,9 +11,9 @@ import { Auth } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-mis-turnos',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  selector: 'app-mis-turnos',
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './mi-perfil.component.html',
   styleUrls: ['./mi-perfil.component.css'],
 })

@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
@@ -9,12 +9,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
 // import { RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
-  selector: 'app-register',
   standalone: true,
+  selector: 'app-register',
   imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añadir esto si el captcha es un web component
+  //schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añadir esto si el captcha es un web component
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [
@@ -56,7 +56,9 @@ export class RegisterComponent {
   captcha: string = '';
   validacionCaptcha: boolean = false;
 
-  constructor(private userService: UserService, private router: Router) {}
+  private router = inject(Router);
+
+  constructor(private userService: UserService) {}
   bandera = 0;
 
   // resolved(captchaResponse: any) {

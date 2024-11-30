@@ -8,8 +8,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-seccion-usuarios',
-  standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule, RouterLink],
   templateUrl: './seccion-usuarios.component.html',
   styleUrl: './seccion-usuarios.component.css',
 })

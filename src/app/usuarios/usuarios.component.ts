@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuarios',
-  standalone: true,
   imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css',
@@ -58,9 +58,6 @@ export class UsuariosComponent implements OnInit {
 
     if (!paciente || !paciente.nombre || !paciente.apellido) {
       console.error('Faltan datos esenciales del paciente.');
-      alert(
-        'No se pueden descargar los datos, falta información del paciente.'
-      );
       return;
     }
 
@@ -69,10 +66,10 @@ export class UsuariosComponent implements OnInit {
       .map((historia, index) => ({
         Nombre: paciente.nombre,
         Apellido: paciente.apellido,
-        Altura: historia.historial.altura || 'N/A',
-        Peso: historia.historial.peso || 'N/A',
-        Temperatura: historia.historial.temperatura || 'N/A',
-        Presión: historia.historial.presion || 'N/A',
+        Altura: historia.historial.altura,
+        Peso: historia.historial.peso,
+        Temperatura: historia.historial.temperatura,
+        Presión: historia.historial.presion,
         Datos_Dinámicos: historia.historial.datosDinamicos
           ? historia.historial.datosDinamicos
               .map((dato: any) => `${dato.clave}: ${dato.valor}`)
@@ -85,7 +82,19 @@ export class UsuariosComponent implements OnInit {
       console.warn(
         'No se encontraron historiales clínicos para este paciente.'
       );
-      alert('Este paciente no tiene historial clínico registrado.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Este paciente no tiene un historial clinico',
+        position: 'top',
+        toast: true,
+        showConfirmButton: true,
+        ///timer: 3000,
+        background: '#f8d7da',
+        customClass: {
+          popup: 'my-custom-popup',
+        },
+      });
       return;
     }
 
@@ -93,12 +102,12 @@ export class UsuariosComponent implements OnInit {
       {
         Nombre: paciente.nombre,
         Apellido: paciente.apellido,
-        Altura: paciente.altura || 'N/A',
-        Peso: paciente.peso || 'N/A',
-        Temperatura: paciente.temperatura || 'N/A',
-        Presión: paciente.presion || 'N/A',
-        Datos_Dinámicos: 'N/A',
-        Número_Historial: 'N/A',
+        Altura: paciente.altura || '↓',
+        Peso: paciente.peso || '↓',
+        Temperatura: paciente.temperatura || '↓',
+        Presión: paciente.presion || '↓',
+        Datos_Dinámicos: '↓',
+        Número_Historial: '↓',
       },
     ];
 

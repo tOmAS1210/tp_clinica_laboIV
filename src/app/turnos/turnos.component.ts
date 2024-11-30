@@ -5,11 +5,10 @@ import { RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 @Component({
-  selector: 'app-turnos',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './turnos.component.html',
-  styleUrl: './turnos.component.css',
+    selector: 'app-turnos',
+    imports: [CommonModule, FormsModule, RouterLink],
+    templateUrl: './turnos.component.html',
+    styleUrl: './turnos.component.css'
 })
 export class TurnosComponent implements OnInit {
   usuarioUid: {} | null = {};

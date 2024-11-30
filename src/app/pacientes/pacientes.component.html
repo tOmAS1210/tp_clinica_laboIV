@@ -1,4 +1,4 @@
-<div class="volver-container">
+<!-- <div class="volver-container">
   <button routerLink="/home">Volver</button>
 </div>
 
@@ -33,20 +33,55 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<div class="volver-container">
+  <button routerLink="/home">Volver</button>
 </div>
 
-<!-- <div class="container-principal">
-  <div class="paciente-card" *ngFor="let paciente of pacientes">
-    <h3>Nombre y Apellido:</h3>
-    <p>{{ paciente.nombre }} {{ paciente.apellido }}</p>
-    <p><strong>Historial Clínico:</strong></p>
+<div class="pacientes-container">
+  <button
+    class="fav-button"
+    *ngFor="let paciente of pacientes"
+    (click)="seleccionarPaciente(paciente)"
+  >
+    <img
+      [src]="paciente.imagenesPerfil"
+      alt="{{ paciente.nombre }}"
+      class="paciente-img"
+    />
+    <span>{{ paciente.nombre }} {{ paciente.apellido }}</span>
+  </button>
+</div>
 
-    <ng-container *ngIf="tieneHistorial(paciente.uid); else noHistorial">
+<div *ngIf="pacienteSeleccionado" class="detalles-container">
+  <div class="turnos-historial-container">
+    <div *ngFor="let turno of turnos" class="turno-card">
+      <p>
+        <strong>Nombre: {{ pacienteSeleccionado.nombre }} </strong>
+      </p>
+      <p>
+        <strong>Apellido: {{ pacienteSeleccionado.apellido }} </strong>
+      </p>
+      <p><strong>Fecha:</strong> {{ turno.Fecha | date : "dd/MM/yyyy" }}</p>
+      <p><strong>Hora:</strong> {{ turno.Hora }}</p>
+      <p><strong>Especialista:</strong> {{ turno.nombreEspecialista }}</p>
+
+      <p>
+        <strong>Calificación del especialista:</strong>
+        {{ turno.calificacionAtencionEspecialista }}
+      </p>
+      <p><strong>Comentario del especialista:</strong></p>
+      <blockquote>{{ turno.comentarioEspecialista }}</blockquote>
+
       <div
-        class="historial-card"
-        *ngFor="let historiaClinica of historialesClinicos"
+        *ngFor="
+          let historiaClinica of obtenerHistorialesDelPaciente(
+            pacienteSeleccionado.uid
+          )
+        "
       >
-        <div *ngIf="historiaClinica.pacienteUid === paciente.uid">
+        <div *ngIf="esTurnoYHistorialCoinciden(turno, historiaClinica)">
           <p>
             <strong>Altura:</strong> {{ historiaClinica.historial.altura }} cm
           </p>
@@ -66,10 +101,59 @@
           </ul>
         </div>
       </div>
-    </ng-container>
+    </div>
+  </div>
+</div>
 
-    <ng-template #noHistorial>
-      <p>No se ha encontrado historial clínico para este paciente.</p>
-    </ng-template>
+<!-- <div *ngIf="pacienteSeleccionado" class="detalles-container">
+  <h3>
+    Detalles de Turnos para {{ pacienteSeleccionado.nombre }}
+    {{ pacienteSeleccionado.apellido }}
+  </h3>
+
+  <div *ngFor="let turno of turnos" class="turno-card">
+    <p><strong>Fecha:</strong> {{ turno.Fecha | date : "dd/MM/yyyy" }}</p>
+    <p><strong>Hora:</strong> {{ turno.Hora }}</p>
+    <p><strong>Especialista:</strong> {{ turno.nombreEspecialista }}</p>
+
+    <p>
+      <strong>Calificación del especialista:</strong>
+      {{ turno.calificacionAtencionEspecialista }}
+    </p>
+    <p><strong>Comentario del especialista:</strong></p>
+    <blockquote>{{ turno.comentarioEspecialista }}</blockquote>
+  </div>
+
+  <div class="paciente-card">
+    <h3>Nombre y Apellido:</h3>
+    <p>{{ pacienteSeleccionado.nombre }} {{ pacienteSeleccionado.apellido }}</p>
+    <p><strong>Historial Clínico:</strong></p>
+
+    <div
+      class="historial-card"
+      *ngFor="
+        let historiaClinica of obtenerHistorialesDelPaciente(
+          pacienteSeleccionado.uid
+        )
+      "
+    >
+      <div *ngIf="historiaClinica.pacienteUid === pacienteSeleccionado.uid">
+        <p>
+          <strong>Altura:</strong> {{ historiaClinica.historial.altura }} cm
+        </p>
+        <p><strong>Peso:</strong> {{ historiaClinica.historial.peso }} kg</p>
+        <p>
+          <strong>Temperatura:</strong>
+          {{ historiaClinica.historial.temperatura }} °C
+        </p>
+        <p><strong>Presión:</strong> {{ historiaClinica.historial.presion }}</p>
+        <ul>
+          <li *ngFor="let dato of historiaClinica.historial.datosDinamicos">
+            <strong>Clave:</strong> {{ dato.clave }} - <br />
+            <strong>Valor:</strong> {{ dato.valor }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div> -->

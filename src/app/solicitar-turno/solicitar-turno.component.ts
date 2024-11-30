@@ -6,11 +6,10 @@ import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-solicitar-turno',
-  standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
-  templateUrl: './solicitar-turno.component.html',
-  styleUrl: './solicitar-turno.component.css',
+    selector: 'app-solicitar-turno',
+    imports: [FormsModule, CommonModule, RouterLink],
+    templateUrl: './solicitar-turno.component.html',
+    styleUrl: './solicitar-turno.component.css'
 })
 export class SolicitarTurnoComponent {
   especialidades: string[] = [];

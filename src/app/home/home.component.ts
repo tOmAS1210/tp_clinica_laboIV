@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, inject, OnInit, Output } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -9,9 +9,9 @@ import { MiPerfilComponent } from '../mi-perfil/mi-perfil.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule],
+  selector: 'app-home',
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   animations: [
@@ -43,11 +43,9 @@ export class HomeComponent implements OnInit {
 
   mostrarComponente: boolean = true;
 
-  constructor(
-    private auth: Auth,
-    private userService: UserService,
-    private router: Router
-  ) {}
+  private router = inject(Router);
+
+  constructor(private auth: Auth, private userService: UserService) {}
 
   async ngOnInit() {
     this.usuarioActual = this.userService.getUsuarioActual();
@@ -60,6 +58,7 @@ export class HomeComponent implements OnInit {
     });
     this.usuarioActualCamposCompletos =
       await this.userService.traerUsuarioPedido(this.usuarioActual);
+    //console.log('id usuario actual lets go: ', this.usuarioActual);
   }
 
   desloguear() {

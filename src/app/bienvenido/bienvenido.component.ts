@@ -3,10 +3,9 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-bienvenido',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
-  templateUrl: './bienvenido.component.html',
-  styleUrl: './bienvenido.component.css',
+    selector: 'app-bienvenido',
+    imports: [RouterLink, CommonModule],
+    templateUrl: './bienvenido.component.html',
+    styleUrl: './bienvenido.component.css'
 })
 export class BienvenidoComponent {}

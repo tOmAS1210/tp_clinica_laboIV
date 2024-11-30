@@ -1,8 +1,8 @@
-.container-principal {
+/* .container-principal {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en filas si son demasiados */
-  gap: 20px; /* Espacio entre los pacientes */
-  justify-content: center; /* Centra los pacientes horizontalmente */
+  flex-wrap: wrap;
+  gap: 20px; 
+  justify-content: center; 
   padding: 20px;
 }
 
@@ -11,11 +11,11 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  width: 250px; /* Ajusta el ancho de las tarjetas */
+  width: 250px; 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; /* Datos del paciente alineados verticalmente */
-  align-items: center; /* Centra el contenido horizontalmente */
+  flex-direction: column;
+  align-items: center; 
   text-align: center;
 }
 
@@ -25,15 +25,15 @@
   border-radius: 5px;
   margin-top: 10px;
   padding: 10px;
-  width: 100%; /* Asegura que los historiales ocupen todo el ancho disponible */
-  text-align: left; /* Alinea el texto a la izquierda */
+  width: 100%; 
+  text-align: left;
 }
 
 .volver-container {
-  position: fixed; /* Fija el botón en la parte superior */
-  top: 10px; /* Margen desde la parte superior */
-  left: 10px; /* Margen desde la izquierda */
-  z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
+  position: fixed; 
+  top: 10px;
+  left: 10px; 
+  z-index: 1000; 
 }
 
 .volver-container button {
@@ -49,4 +49,93 @@
 
 .volver-container button:hover {
   background-color: #0056b3;
+}
+
+ */
+
+.volver-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.container-principal {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en múltiples líneas */
+  justify-content: start; /* Alinea los botones al principio */
+  gap: 20px; /* Espaciado entre botones */
+  padding: 20px;
+}
+
+.pacientes-container {
+  display: flex;
+  gap: 20px; /* Espacio entre botones */
+  flex-wrap: wrap; /* Asegura que los botones se ajusten si es necesario */
+}
+
+.fav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  flex-shrink: 0; /* Evita que los botones se reduzcan si hay mucho espacio */
+}
+
+.fav-button:hover {
+  transform: scale(1.05);
+}
+
+.fav-button .paciente-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.fav-button span {
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.paciente-card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.historial-card {
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+button {
+  background: #007bff;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.sin-historial {
+  background-color: red; /* Puedes cambiar este color a tu preferencia */
+  color: white; /* Cambia el color del texto si es necesario */
+  border: 2px solid darkred; /* Agrega un borde rojo oscuro */
 }

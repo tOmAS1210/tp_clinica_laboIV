@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 
@@ -9,8 +9,7 @@ import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-mis-turnos',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, RouterLink],
   templateUrl: './mis-turnos.component.html',
   styleUrls: ['./mis-turnos.component.css'],
 })

@@ -5,9 +5,9 @@ import { RouterLink } from '@angular/router';
 import { jsPDF } from 'jspdf';
 
 @Component({
-  selector: 'app-graficos-estadisticas',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  selector: 'app-graficos-estadisticas',
+  imports: [],
   templateUrl: './graficos-estadisticas.component.html',
   styleUrl: './graficos-estadisticas.component.css',
 })
