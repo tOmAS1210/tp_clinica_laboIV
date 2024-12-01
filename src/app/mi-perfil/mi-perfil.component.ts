@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import jsPDF from 'jspdf';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 import Swal from 'sweetalert2';
 
@@ -166,5 +168,99 @@ export class MiPerfilComponent implements OnInit {
     // Guardar el PDF
     const nombreArchivo = `Historial_${historia.fechaHistoriaClinica}.pdf`;
     doc.save(nombreArchivo);
+  }
+
+  descargarAtencionesProfesional(uidEspecialista: string, paciente: any): void {
+    if (!this.historialClinico || this.historialClinico.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Sin atenciones registradas',
+        text: 'No se encontraron atenciones realizadas por este profesional.',
+        position: 'top',
+        toast: true,
+        showConfirmButton: true,
+        background: '#f8d7da',
+      });
+      return;
+    }
+
+    // Filtrar los historiales clínicos del especialista
+    const historialesEspecialista = this.historialClinico.filter(
+      (historia) => historia.uidEspecialista === uidEspecialista
+    );
+
+    if (historialesEspecialista.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Sin atenciones registradas',
+        text: 'Este especialista no tiene atenciones registradas.',
+        position: 'top',
+        toast: true,
+        showConfirmButton: true,
+        background: '#f8d7da',
+      });
+      return;
+    }
+
+    // Transformar los datos del historial para exportar
+    const datosAtenciones = historialesEspecialista.map((historia, index) => ({
+      Número: index + 1,
+      Fecha: historia.fechaHistoriaClinica,
+      Hora: historia.horaHistoriaClinica,
+      Altura: historia.altura || 'N/A',
+      Peso: historia.peso || 'N/A',
+      Presión: historia.presion || 'N/A',
+      Temperatura: historia.temperatura || 'N/A',
+      Datos_Dinámicos: historia.datosDinamicos
+        ? historia.datosDinamicos
+            .map((dato: any) => `${dato.clave}: ${dato.valor}`)
+            .join(', ')
+        : 'N/A',
+      Especialidad: historia.especialidadEspecialista || 'N/A',
+      Paciente: `${paciente.nombre} ${paciente.apellido}`,
+    }));
+
+    // Crear hoja de cálculo
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datosAtenciones);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Atenciones');
+
+    // Nombre del archivo
+    const fechaHora = new Date().toISOString().replace(/[-T:.]/g, '_');
+    const nombreArchivo = `Atenciones_${uidEspecialista}_${fechaHora}.xlsx`;
+
+    // Exportar
+    try {
+      const excelBuffer: any = XLSX.write(wb, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      const blob = new Blob([excelBuffer], {
+        type: 'application/octet-stream',
+      });
+      saveAs(blob, nombreArchivo);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Descarga completa',
+        text: 'El archivo de atenciones ha sido generado exitosamente.',
+        position: 'top',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        background: '#d4edda',
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al generar el archivo',
+        text: 'Ocurrió un problema al intentar generar el archivo de atenciones.',
+        position: 'top',
+        toast: true,
+        showConfirmButton: true,
+        background: '#f8d7da',
+      });
+      console.error('Error al generar el archivo Excel:', error);
+    }
   }
 }

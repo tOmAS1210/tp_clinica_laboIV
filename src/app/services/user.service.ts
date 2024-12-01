@@ -33,6 +33,7 @@ import {
   uploadBytes,
 } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
+import { Chart } from 'chart.js';
 
 @Injectable({
   providedIn: 'root',
@@ -47,11 +48,106 @@ export class UserService {
 
   usuarioPersistente: User | null = null;
 
+  ingresosChart: any;
+
   constructor(
     @Inject(Auth) private auth: Auth,
     @Inject(Firestore) private firestore: Firestore
   ) {
     this.storage = getStorage();
+  }
+
+  async registrarIngreso() {
+    const usuarioActual = this.getUsuarioActual();
+    const usuarioDetalles = await this.traerUsuarioPedido(usuarioActual);
+
+    const log = {
+      usuario: usuarioDetalles?.['nombre'] || 'Desconocido',
+      fecha: new Date().toISOString(),
+    };
+
+    try {
+      const logsCollection = collection(this.firestore, 'logs_ingresos');
+      await addDoc(logsCollection, log);
+
+      console.log('Log de ingreso registrado con éxito:', log);
+    } catch (error) {
+      console.error('Error al registrar el log de ingreso:', error);
+    }
+  }
+
+  // async obtenerLogs() {
+  //   try {
+  //     const logsCollection = collection(this.firestore, 'logs_ingresos');
+  //     const logsSnapshot = await getDocs(logsCollection);
+
+  //     // Procesa los datos
+  //     const logs = logsSnapshot.docs.map((doc) => doc.data());
+
+  //     // Obtiene la fecha y hora de ingreso junto al usuario
+  //     const usuarios = Array.from(
+  //       new Set(logs.map((log: any) => log['usuario']))
+  //     );
+
+  //     // Prepara los logs para mostrar fecha y hora de ingreso
+  //     const labels = logs.map((log: any) => {
+  //       const fecha = new Date(log['fecha']);
+  //       return `${log['usuario']} - ${fecha.toLocaleString()}`; // Muestra usuario y fecha
+  //     });
+
+  //     // Para cada usuario, contar la cantidad de ingresos
+  //     const ingresosPorUsuario = usuarios.map((usuario) => {
+  //       return logs.filter((log: any) => log['usuario'] === usuario).length;
+  //     });
+
+  //     return { labels, ingresosPorUsuario };
+  //   } catch (error) {
+  //     console.error('Error al obtener logs:', error);
+  //     throw error;
+  //   }
+  // }
+
+  async obtenerLogs() {
+    try {
+      const logsCollection = collection(this.firestore, 'logs_ingresos');
+      const logsSnapshot = await getDocs(logsCollection);
+
+      const logs = logsSnapshot.docs.map((doc) => doc.data());
+
+      const ingresosPorUsuarioYFecha: {
+        [key: string]: { [key: string]: number };
+      } = {};
+
+      logs.forEach((log: any) => {
+        const usuario = log['usuario'];
+        const fecha = new Date(log['fecha']).toLocaleDateString();
+
+        if (!ingresosPorUsuarioYFecha[usuario]) {
+          ingresosPorUsuarioYFecha[usuario] = {};
+        }
+
+        if (!ingresosPorUsuarioYFecha[usuario][fecha]) {
+          ingresosPorUsuarioYFecha[usuario][fecha] = 0;
+        }
+
+        ingresosPorUsuarioYFecha[usuario][fecha]++;
+      });
+
+      const labels: string[] = [];
+      const cantidadIngresos: number[] = [];
+
+      for (const usuario in ingresosPorUsuarioYFecha) {
+        for (const fecha in ingresosPorUsuarioYFecha[usuario]) {
+          labels.push(`${usuario} - ${fecha}`);
+          cantidadIngresos.push(ingresosPorUsuarioYFecha[usuario][fecha]);
+        }
+      }
+
+      return { labels, cantidadIngresos };
+    } catch (error) {
+      console.error('Error al obtener logs:', error);
+      throw error;
+    }
   }
 
   async registerPaciente(

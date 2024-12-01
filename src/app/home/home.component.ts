@@ -45,19 +45,25 @@ export class HomeComponent implements OnInit {
 
   private router = inject(Router);
 
+  registrado = true;
+
   constructor(private auth: Auth, private userService: UserService) {}
 
   async ngOnInit() {
     this.usuarioActual = this.userService.getUsuarioActual();
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {
-        console.log('Usuario actual: ', user);
+        //console.log('Usuario actual: ', user);
         this.nivel = await this.userService.verificarNivelUsuario(user);
-        console.log('Nivel usuario: ', this.nivel);
+        //console.log('Nivel usuario: ', this.nivel);
       }
     });
     this.usuarioActualCamposCompletos =
       await this.userService.traerUsuarioPedido(this.usuarioActual);
+    // if (this.registrado) {
+    //   this.userService.registrarIngreso();
+    //   this.registrado = false;
+    // }
     //console.log('id usuario actual lets go: ', this.usuarioActual);
   }
 
@@ -65,6 +71,7 @@ export class HomeComponent implements OnInit {
     this.userService
       .logOut()
       .then(() => {
+        //this.registrado = true;
         this.userService.isAuthenticated = false;
         this.router.navigate(['/bienvenido']);
         Swal.fire({
@@ -83,8 +90,4 @@ export class HomeComponent implements OnInit {
       })
       .catch((error) => console.log(error));
   }
-
-  // tipoUsuario() {
-  //   this.userService.getUsuarioActual();
-  // }
 }

@@ -91,4 +91,44 @@ export const routes: Routes = [
         (c) => c.GraficosEstadisticasComponent
       ),
   },
+
+  {
+    path: 'logIngresos',
+    loadComponent: () =>
+      import('./log-ingresos/log-ingresos.component').then(
+        (c) => c.LogIngresosComponent
+      ),
+  },
+
+  {
+    path: 'cantidadTurnosEspecialidad',
+    loadComponent: () =>
+      import(
+        './cantidad-turnos-especialidad/cantidad-turnos-especialidad.component'
+      ).then((c) => c.CantidadTurnosEspecialidadComponent),
+  },
+
+  {
+    path: 'cantidadTurnosPorDia',
+    loadComponent: () =>
+      import('./cantidad-turnos-dia/cantidad-turnos-dia.component').then(
+        (c) => c.CantidadTurnosDiaComponent
+      ),
+  },
+
+  {
+    path: 'cantidadTurnosSolicitados',
+    loadComponent: () =>
+      import(
+        './cantidad-turnos-solicitados/cantidad-turnos-solicitados.component'
+      ).then((c) => c.CantidadTurnosSolicitadosComponent),
+  },
+
+  {
+    path: 'cantidadTurnosFinalizados',
+    loadComponent: () =>
+      import(
+        './cantidad-turnos-finalizados-por-medico/cantidad-turnos-finalizados-por-medico.component'
+      ).then((c) => c.CantidadTurnosFinalizadosPorMedicoComponent),
+  },
 ];

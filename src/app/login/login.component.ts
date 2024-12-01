@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 import { authGuard } from '../auth.guard';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   standalone: true,
@@ -55,7 +56,11 @@ export class LoginComponent implements OnInit {
 
   private router = inject(Router);
 
-  constructor(private userService: UserService, private authGuard: authGuard) {}
+  constructor(
+    private userService: UserService,
+    private authGuard: authGuard,
+    private firestore: Firestore
+  ) {}
   async ngOnInit() {
     this.arrayPacientes = await this.userService.getPacientes();
 
@@ -90,9 +95,8 @@ export class LoginComponent implements OnInit {
     this.userService
       .login(this.mail, this.passWord)
       .then((response) => {
-        //console.log(response);
         this.userService.isAuthenticated = true;
-
+        this.userService.registrarIngreso();
         this.authGuard.canActivate().then((isHabilitado) => {
           if (isHabilitado) {
             this.router.navigate(['/home']);

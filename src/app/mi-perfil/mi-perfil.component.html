@@ -98,7 +98,21 @@
               Hora: {{ historia.horaHistoriaClinica }}
             </button>
             <button (click)="generarPDF(historia)">Descargar PDF</button>
+            <button
+              (click)="
+                descargarAtencionesProfesional(
+                  historia.uidEspecialista,
+                  usuarioActual
+                )
+              "
+            >
+              Descargar Todas las Atenciones De
+              {{ historia.nombreEspecialista }}
+            </button>
             <div *ngIf="historia.visible">
+              <p>
+                <strong>Especialista:</strong> {{ historia.nombreEspecialista }}
+              </p>
               <p><strong>Fecha:</strong> {{ historia.fechaHistoriaClinica }}</p>
               <p><strong>Hora:</strong> {{ historia.horaHistoriaClinica }}</p>
               <p><strong>Altura:</strong> {{ historia.altura }}</p>
