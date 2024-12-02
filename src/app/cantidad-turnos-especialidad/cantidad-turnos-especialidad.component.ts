@@ -75,6 +75,6 @@ export class CantidadTurnosEspecialidadComponent {
     const pdfHeight = (canvasImage.height * pdfWidth) / canvasImage.width;
 
     pdf.addImage(imageData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save('log_ingresos.pdf');
+    pdf.save('cantidadTurnosEspecialidad.pdf');
   }
 }

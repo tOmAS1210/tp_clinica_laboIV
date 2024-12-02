@@ -7,11 +7,12 @@ import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
 import { MiPerfilComponent } from '../mi-perfil/mi-perfil.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ReziceOnHoverDirective } from '../directives/rezice-on-hover.directive';
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, ReziceOnHoverDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   animations: [

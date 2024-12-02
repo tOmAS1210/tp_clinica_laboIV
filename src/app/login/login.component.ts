@@ -8,11 +8,21 @@ import Swal from 'sweetalert2';
 import { authGuard } from '../auth.guard';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Firestore } from '@angular/fire/firestore';
+import { CapitalizarPipe } from '../pipes/capitalizar.pipe';
+import { RestaltarDirective } from '../directives/restaltar.directive';
+import { ValidarEmailDirective } from '../directives/validar-email.directive';
 
 @Component({
   standalone: true,
   selector: 'app-login',
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [
+    FormsModule,
+    CommonModule,
+    RouterLink,
+    CapitalizarPipe,
+    RestaltarDirective,
+    ValidarEmailDirective,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   animations: [

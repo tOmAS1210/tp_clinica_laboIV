@@ -11,11 +11,19 @@ import Swal from 'sweetalert2';
 
 import { Auth } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
+import { OcultarCaracteresPipe } from '../pipes/ocultar-caracteres.pipe';
+import { MayusculasPipe } from '../pipes/mayusculas.pipe';
 
 @Component({
   standalone: true,
   selector: 'app-mis-turnos',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    OcultarCaracteresPipe,
+    MayusculasPipe,
+  ],
   templateUrl: './mi-perfil.component.html',
   styleUrls: ['./mi-perfil.component.css'],
 })

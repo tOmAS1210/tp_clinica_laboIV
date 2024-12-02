@@ -1,10 +1,15 @@
 <div *ngIf="mostrarComponente" @slideInFromTop>
   <div class="contenedor">
-    <button routerLink="/seccionUsuarios" *ngIf="nivel === 'Administrador'">
+    <button
+      appReziceOnHover
+      routerLink="/seccionUsuarios"
+      *ngIf="nivel === 'Administrador'"
+    >
       Seccion Usuarios
     </button>
 
     <button
+      appReziceOnHover
       routerLink="/solicitarTurnos"
       *ngIf="nivel === 'Administrador' || nivel === 'Paciente'"
     >
@@ -12,6 +17,7 @@
     </button>
 
     <button
+      appReziceOnHover
       routerLink="/misTurnos"
       *ngIf="usuarioActualCamposCompletos.nivel !== 'Administrador'"
     >
@@ -19,6 +25,7 @@
     </button>
 
     <button
+      appReziceOnHover
       routerLink="/turnos"
       *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
     >
@@ -26,6 +33,7 @@
     </button>
 
     <button
+      appReziceOnHover
       routerLink="/usuarios"
       *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
     >
@@ -33,6 +41,7 @@
     </button>
 
     <button
+      appReziceOnHover
       routerLink="/graficosEstadisticas"
       *ngIf="usuarioActualCamposCompletos.nivel === 'Administrador'"
     >
@@ -40,15 +49,16 @@
     </button>
 
     <button
+      appReziceOnHover
       routerLink="/pacientes"
       *ngIf="usuarioActualCamposCompletos.nivel === 'Especialista'"
     >
       Pacientes
     </button>
 
-    <button routerLink="/miPerfil">Mi perfil</button>
+    <button appReziceOnHover routerLink="/miPerfil">Mi perfil</button>
 
-    <button (click)="desloguear()">Desloguear</button>
+    <button appReziceOnHover (click)="desloguear()">Desloguear</button>
 
     <div class="usuario-info">
       <span class="nombre-usuario">

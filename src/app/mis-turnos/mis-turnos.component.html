@@ -1,6 +1,7 @@
 <div class="contenedor-filtro"></div>
 
 <div class="contenedor-turnos">
+  <button routerLink="/home">Volver</button>
   <input type="text" [(ngModel)]="filtro" />
   <div class="turnos-solicitados" *ngFor="let turno of filtrarTurnosInput()">
     <p>Turno</p>
@@ -223,5 +224,3 @@
     </div>
   </div>
 </div>
-
-<button routerLink="/home">Volver</button>

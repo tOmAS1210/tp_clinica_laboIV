@@ -1,7 +1,12 @@
-<button routerLink="/graficosEstadisticas">Volver</button>
-<button (click)="descargarPDF()">Descargar PDF</button>
-
-<div>
-  <h2>Cantidad de Turnos por dia</h2>
-  <canvas id="turnosPorDiaChart"></canvas>
+<div class="page-container">
+  <div class="header">
+    <button class="back-button" routerLink="/graficosEstadisticas">
+      Volver
+    </button>
+    <button class="pdf-button" (click)="descargarPDF()">Descargar PDF</button>
+  </div>
+  <div class="content">
+    <h2>Cantidad de Turnos por dia</h2>
+    <canvas id="turnosPorDiaChart"></canvas>
+  </div>
 </div>

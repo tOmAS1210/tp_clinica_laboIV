@@ -1,6 +1,6 @@
 <div *ngIf="mostrarComponente" @fadeInOut>
   <div class="contenedor-tipo">
-    <h1>Complete los datos para poder loguearse</h1>
+    <h1>{{ "Complete los datos para poder loguearse" | capitalizar }}</h1>
   </div>
 
   <div class="main-container">
@@ -9,7 +9,12 @@
         <h1>Login</h1>
 
         <p>Mail</p>
-        <input [(ngModel)]="mail" type="email" placeholder="Mail" />
+        <input
+          [(ngModel)]="mail"
+          type="email"
+          placeholder="Mail"
+          appValidarEmail
+        />
         <br />
 
         <p>Contraseña</p>
@@ -17,7 +22,7 @@
         <br />
 
         <div class="buttons">
-          <button (click)="loguearUsuario()">Loguear</button>
+          <button appRestaltar (click)="loguearUsuario()">Loguear</button>
           <button routerLink="/bienvenido">Volver</button>
         </div>
       </div>

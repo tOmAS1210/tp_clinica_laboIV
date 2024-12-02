@@ -11,10 +11,21 @@
             width="100"
           />
         </li>
-        <li><strong>Nombre:</strong> {{ usuarioActual.nombre }}</li>
-        <li><strong>Apellido:</strong> {{ usuarioActual.apellido }}</li>
-        <li><strong>Edad:</strong> {{ usuarioActual.edad }}</li>
-        <li><strong>Email:</strong> {{ usuarioActual.email }}</li>
+        <li>
+          <strong>{{ "Nombre" | mayusculas }}:</strong>
+          {{ usuarioActual.nombre }}
+        </li>
+        <li>
+          <strong>{{ "Apellido" | mayusculas }}:</strong>
+          {{ usuarioActual.apellido }}
+        </li>
+        <li>
+          <strong>{{ "Edad" | mayusculas }}:</strong> {{ usuarioActual.edad }}
+        </li>
+        <li>
+          <strong>{{ "Email" | mayusculas }}:</strong>
+          {{ usuarioActual.email | ocultarCaracteres }}
+        </li>
         <ng-container *ngIf="nivel === 'Especialista'">
           <li *ngFor="let especialidad of especialidadesUsuario">
             <strong>Especialidad:</strong> {{ especialidad }}

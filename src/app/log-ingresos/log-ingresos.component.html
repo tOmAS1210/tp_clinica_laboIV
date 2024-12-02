@@ -1,7 +1,11 @@
-<button routerLink="/graficosEstadisticas">Volver</button>
-<button (click)="descargarPDF()">Descargar PDF</button>
-<div>
-  <div>
+<div class="page-container">
+  <div class="header">
+    <button class="back-button" routerLink="/graficosEstadisticas">
+      Volver
+    </button>
+    <button class="pdf-button" (click)="descargarPDF()">Descargar PDF</button>
+  </div>
+  <div class="content">
     <h2>Log de Ingresos al Sistema</h2>
     <canvas id="ingresosChart"></canvas>
   </div>

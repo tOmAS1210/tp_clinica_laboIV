@@ -1,0 +1,93 @@
+/* Estilo general de la página */
+.page-container {
+  font-family: "Arial", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f7fc; /* Fondo claro */
+  padding: 20px;
+  margin: 0;
+}
+
+/* Encabezado */
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+/* Botón Volver */
+.back-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff; /* Azul */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Botón Descargar PDF */
+.pdf-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #28a745; /* Verde */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Estilos al pasar el cursor sobre los botones */
+.back-button:hover {
+  background-color: #0056b3; /* Azul más oscuro */
+  transform: scale(1.05); /* Ligera ampliación */
+}
+
+.pdf-button:hover {
+  background-color: #218838; /* Verde más oscuro */
+  transform: scale(1.05); /* Ligera ampliación */
+}
+
+/* Área del contenido */
+.content {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+/* Título */
+.content h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Responsivo para dispositivos pequeños */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .back-button,
+  .pdf-button {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+}
