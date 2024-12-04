@@ -65,11 +65,9 @@ export class CantidadTurnosEspecialidadComponent {
       return;
     }
 
-    // Capturar el gráfico como imagen
     const canvasImage = await html2canvas(canvas);
     const imageData = canvasImage.toDataURL('image/png');
 
-    // Crear el PDF
     const pdf = new jsPDF('landscape', 'px', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvasImage.height * pdfWidth) / canvasImage.width;

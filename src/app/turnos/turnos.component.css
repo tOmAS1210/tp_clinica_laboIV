@@ -1,27 +1,25 @@
-/* Estilo para el contenedor que envolverá todos los turnos */
 .contenedor-turnos {
   display: flex;
-  flex-wrap: wrap; /* Asegura que los elementos se ajusten a la siguiente línea si es necesario */
-  gap: 10px; /* Espacio entre los turnos */
-  justify-content: flex-start; /* Alinea los turnos al principio */
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
   padding: 20px;
 }
 
-/* Estilo para cada turno */
 .turnos-solicitados {
   display: flex;
-  flex-direction: column; /* Pone la información del turno en columna */
-  background-color: #f0f0f0; /* Fondo claro */
+  flex-direction: column;
+  background-color: #f0f0f0;
   padding: 10px;
-  border: 1px solid #ccc; /* Borde claro */
-  border-radius: 4px; /* Bordes ligeramente redondeados */
-  width: 250px; /* Ancho fijo para cada turno */
-  box-sizing: border-box; /* Para que el padding no afecte al ancho total */
-  text-align: center; /* Centra el contenido dentro de cada turno */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 350px;
+  box-sizing: border-box;
+  text-align: center;
   font-family: Arial, sans-serif;
+  margin: 5px;
 }
 
-/* Opcional: Estilo adicional para el botón */
 button {
   margin-top: 20px;
   padding: 10px 20px;
@@ -72,4 +70,11 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.dato-turno {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.33);
 }

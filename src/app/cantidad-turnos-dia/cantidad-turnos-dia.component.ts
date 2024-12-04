@@ -35,22 +35,58 @@ export class CantidadTurnosDiaComponent {
         turnosPorDia[fecha] = (turnosPorDia[fecha] || 0) + 1;
       });
 
-      const fechas = Object.keys(turnosPorDia);
-      const cantidades = Object.values(turnosPorDia);
+      // Ordena las fechas en formato dd/MM/yyyy
+      const fechasOrdenadas = Object.keys(turnosPorDia).sort((a, b) => {
+        const [diaA, mesA, añoA] = a.split('/').map(Number);
+        const [diaB, mesB, añoB] = b.split('/').map(Number);
+
+        return (
+          new Date(añoA, mesA - 1, diaA).getTime() -
+          new Date(añoB, mesB - 1, diaB).getTime()
+        );
+      });
+
+      const cantidadesOrdenadas = fechasOrdenadas.map(
+        (fecha) => turnosPorDia[fecha]
+      );
 
       this.turnosPorDiaChart = new Chart('turnosPorDiaChart', {
         type: 'bar',
         data: {
-          labels: fechas,
+          labels: fechasOrdenadas,
           datasets: [
             {
               label: 'Cantidad de Turnos',
-              data: cantidades,
+              data: cantidadesOrdenadas,
               backgroundColor: 'rgba(153, 102, 255, 0.2)',
               borderColor: 'rgba(153, 102, 255, 1)',
               borderWidth: 1,
             },
           ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+            },
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Fechas',
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Cantidad de Turnos',
+              },
+              beginAtZero: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -68,11 +104,9 @@ export class CantidadTurnosDiaComponent {
       return;
     }
 
-    // Capturar el gráfico como imagen
     const canvasImage = await html2canvas(canvas);
     const imageData = canvasImage.toDataURL('image/png');
 
-    // Crear el PDF
     const pdf = new jsPDF('landscape', 'px', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvasImage.height * pdfWidth) / canvasImage.width;

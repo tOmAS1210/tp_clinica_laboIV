@@ -3,15 +3,27 @@
 <div class="contenedor-turnos">
   <input type="text" [(ngModel)]="filtro" />
   <div class="turnos-solicitados" *ngFor="let turno of filtrarTurnosInput()">
-    <p>Turno</p>
+    <h3>TURNO</h3>
 
-    <strong>Especialista:</strong> {{ turno.nombreEspecialista }}
-    <strong>Paciente:</strong> {{ turno.nombrePaciente }}
-    <div><strong>Especialidad:</strong> {{ turno.especialidad }}</div>
-    <div><strong>Fecha:</strong> {{ turno.Fecha }}</div>
-    <div><strong>Día:</strong> {{ turno.Dia }}</div>
-    <div><strong>Hora:</strong>{{ turno.Hora }}</div>
-    <div><strong>Estado:</strong> {{ turno.estadoTurno }}</div>
+    <div class="dato-turno">
+      <strong>Especialista:</strong>
+      <span> {{ turno.nombreEspecialista }}</span>
+    </div>
+    <div class="dato-turno">
+      <strong>Especialidad:</strong><span>{{ turno.especialidad }}</span>
+    </div>
+    <div class="dato-turno">
+      <strong>Fecha:</strong><span> {{ turno.Fecha }}</span>
+    </div>
+    <div class="dato-turno">
+      <strong>Día:</strong> <span>{{ turno.Dia }}</span>
+    </div>
+    <div class="dato-turno">
+      <strong>Hora:</strong> <span>{{ turno.Hora }}</span>
+    </div>
+    <div class="dato-turno">
+      <strong>Estado:</strong><span>{{ turno.estadoTurno }}</span>
+    </div>
 
     <button
       *ngIf="turno.estadoTurno === 'activo'"

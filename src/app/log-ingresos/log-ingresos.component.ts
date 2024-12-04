@@ -22,14 +22,30 @@ export class LogIngresosComponent {
     try {
       const { labels, cantidadIngresos } = await this.userService.obtenerLogs();
 
+      const data = labels.map((label, index) => {
+        const fecha = label.split(' - ')[1];
+        const formattedDate = fecha.split('/').reverse().join('-');
+        const dateObj = new Date(formattedDate);
+        return { label, cantidadIngresos: cantidadIngresos[index], dateObj };
+      });
+
+      const sortedData = data.sort(
+        (a, b) => a.dateObj.getTime() - b.dateObj.getTime()
+      );
+
+      const sortedLabels = sortedData.map((item) => item.label);
+      const sortedCantidadIngresos = sortedData.map(
+        (item) => item.cantidadIngresos
+      );
+
       this.ingresosChart = new Chart('ingresosChart', {
         type: 'bar',
         data: {
-          labels: labels,
+          labels: sortedLabels,
           datasets: [
             {
               label: 'Ingresos por Usuario',
-              data: cantidadIngresos,
+              data: sortedCantidadIngresos,
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
               borderWidth: 1,

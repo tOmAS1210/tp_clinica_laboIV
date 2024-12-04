@@ -12,6 +12,90 @@ import jsPDF from 'jspdf';
   styleUrl: './cantidad-turnos-finalizados-por-medico.component.css',
 })
 export class CantidadTurnosFinalizadosPorMedicoComponent {
+  // public turnosFinalizadosChart: any;
+
+  // constructor(private userService: UserService) {
+  //   Chart.register(...registerables);
+  // }
+
+  // async ngOnInit() {
+  //   const fechaInicio = new Date('2024-01-01');
+  //   const fechaFin = new Date('2024-12-31');
+
+  //   const turnos = await this.userService.obtenerAllTurnos();
+
+  //   const turnosFinalizados = turnos.filter((turno: any) => {
+  //     const fechaTurno = new Date(turno.Fecha);
+  //     return (
+  //       turno.estadoTurno === 'finalizado' &&
+  //       fechaTurno >= fechaInicio &&
+  //       fechaTurno <= fechaFin
+  //     );
+  //   });
+
+  //   const medicos = Array.from(
+  //     new Set(turnosFinalizados.map((turno) => turno['nombreEspecialista']))
+  //   );
+
+  //   const datasets = medicos.map((medico) => {
+  //     const fechasTurnos = turnosFinalizados
+  //       .filter((turno) => turno['nombreEspecialista'] === medico)
+  //       .map((turno) => turno['Fecha']);
+
+  //     return {
+  //       label: medico,
+  //       data: fechasTurnos.map(() => 1),
+  //       backgroundColor: this.getRandomColor(),
+  //       borderColor: this.getRandomColor(),
+  //       borderWidth: 1,
+  //     };
+  //   });
+
+  //   this.turnosFinalizadosChart = new Chart('turnosFinalizadosChart', {
+  //     type: 'bar',
+  //     data: {
+  //       labels: turnosFinalizados.map((turno) => turno['Fecha']),
+  //       datasets: datasets,
+  //     },
+  //     options: {
+  //       responsive: true,
+  //       plugins: {
+  //         legend: {
+  //           display: true,
+  //           position: 'top',
+  //         },
+  //       },
+  //       scales: {
+  //         x: {
+  //           title: {
+  //             display: true,
+  //             text: 'Fechas de Turnos Finalizados',
+  //           },
+  //         },
+  //         y: {
+  //           title: {
+  //             display: true,
+  //             text: 'Turnos Finalizados',
+  //           },
+  //           beginAtZero: true,
+  //           ticks: {
+  //             stepSize: 1,
+  //           },
+  //         },
+  //       },
+  //     },
+  //   });
+  // }
+
+  // private getRandomColor(): string {
+  //   const letters = '0123456789ABCDEF';
+  //   let color = '#';
+  //   for (let i = 0; i < 6; i++) {
+  //     color += letters[Math.floor(Math.random() * 16)];
+  //   }
+  //   return color;
+  // }
+
   public turnosFinalizadosChart: any;
 
   constructor(private userService: UserService) {
